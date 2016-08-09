@@ -7,6 +7,7 @@
     <script src="src/jquery.vpage.min.js"></script>
     <script>
         $(function (){
+
             // 設定 A 觸發
             $(".my_first_A").vpage({
                 name: "page1",
@@ -17,7 +18,12 @@
                 },
                 onpop:  function (){
                     alert('pop 1');
+                },
+                event: 'click', 
+                do: function (){
+                    alert("click 1")
                 }
+
             });
 
             // 設定 B 觸發
@@ -30,8 +36,14 @@
                 },
                 onpop:  function (){
                     alert('pop 2');
+                },
+                event: 'click', 
+                do: function (){
+                    alert("click 2")
                 }
             });
+
+
 
             // 監聽事件
             $.vpage.listen();

@@ -90,25 +90,28 @@
     }
 
 
-
     /**
      * [vpage description]
-     * @param  param.name     為該模型命名
-     * @param  param.state    history.pushState 物件     
-     * @param  param.title    (選)變更的網頁標題
-     * @param  param.url      (選)變更的網址
-     * @param  param.onload   (選)
-     * @param  param.onpop    (選)
+     * @param  param.name       為該模型命名
+     * @param  param.state      history.pushState 物件     
+     * @param  param.event      on 的事件
+     * @param  param.do(param)  on 回呼
+     * @param  param.title      (選)變更的網頁標題
+     * @param  param.url        (選)變更的網址
+     * @param  param.onload     (選)
+     * @param  param.onpop      (選)
      */
     $.fn.vpage = function (param){
 
         // 將設定放到倉儲，使用 vpage 的名稱作為鍵
         $.vpage.storage[param.name] = param;
 
-        this.on("click", function (){
+        this.on(param.event, function (){
             param.state = $.vpage.api.add_state(param);
 
             history.pushState(param.state, param.title, param.url);
+
+            param.do(param);
         })
     }
 
