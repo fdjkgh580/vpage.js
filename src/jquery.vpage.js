@@ -89,13 +89,24 @@
         }
     }
 
+    // 設定
+    $.vpage.set = function (name, key, val){
+        $.vpage.storage[name][key] = val;
+    }
+
+    // 取得設定
+    $.vpage.get = function (name, key){
+        return $.vpage.storage[name][key];
+    }
+
 
     /**
      * [vpage description]
      * @param  param.name       為該模型命名
      * @param  param.state      history.pushState 物件     
      * @param  param.event      on 的事件
-     * @param  param.do(param)  on 回呼
+     * @param  param.before()   (選)on 回呼
+     * @param  param.after()    (選)on 回呼
      * @param  param.title      (選)變更的網頁標題
      * @param  param.url        (選)變更的網址
      * @param  param.onload     (選)
@@ -107,11 +118,14 @@
         $.vpage.storage[param.name] = param;
 
         this.on(param.event, function (){
+
+            if (param.before) param.before(param);
+
             param.state = $.vpage.api.add_state(param);
 
             history.pushState(param.state, param.title, param.url);
 
-            param.do(param);
+            if (param.after) param.after(param);
         })
     }
 

@@ -20,7 +20,7 @@
                     alert('pop 1');
                 },
                 event: 'click', 
-                do: function (){
+                before: function (){
                     alert("click 1")
                 }
 
@@ -38,10 +38,33 @@
                     alert('pop 2');
                 },
                 event: 'click', 
-                do: function (){
+                before: function (){
                     alert("click 2")
                 }
             });
+
+            // 設定 C 觸發，動態改變 url
+            $(".my_first_C").vpage({
+                name: "page3",
+                state: {a:2},
+                onload:  function (){
+                    alert('onload 3')
+                },
+                onpop:  function (){
+                    alert('pop 3');
+                },
+                event: 'click', 
+                before: function (data){
+                    $.vpage.set("page3", "url", "?onload=page3&else=test");
+                    alert("click 3")
+                },
+                after : function (data){
+                    var newurl = $.vpage.get("page3", "url");
+                    alert("new_url: " + newurl);
+                }
+            });
+
+            
 
 
 
@@ -58,6 +81,7 @@
 
     <a class="my_first_A">A</a> <br>
     <a class="my_first_B">B</a> <br>
+    <a class="my_first_C">C</a> <br>
     
 </body>
 </html>

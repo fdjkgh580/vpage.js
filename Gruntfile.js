@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         // 設定監控異動
         watch: {
             //監控的檔案
-            files: ['src/*.js'],
+            files: ['src/jquery.vpage.js'],
             // 監控發生異動，任務要指派給哪個外掛套件
             tasks: ['uglify'],
             options: {
