@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script src="jquery-3.1.0.min.js"></script>
-    <script src="src/jquery.vpage.js"></script>
+    <script src="src/jquery.vpage.min.js"></script>
     <script>
         $(function (){
+            // 設定 A 觸發
             $(".my_first_A").vpage({
                 name: "page1",
-                url: "?page=1",
+                url: "?onload=page1",
                 state: {a:1},
                 onload:  function (){
                     alert('onload 1')
@@ -19,9 +20,10 @@
                 }
             });
 
+            // 設定 B 觸發
             $(".my_first_B").vpage({
                 name: "page2",
-                url: "?page=2",
+                url: "?onload=page2",
                 state: {a:2},
                 onload:  function (){
                     alert('onload 2')
@@ -31,7 +33,11 @@
                 }
             });
 
+            // 監聽事件
             $.vpage.listen();
+
+            // 手動觸發
+            // $.vpage.trigger("page2", "onpop");
 
         })
     </script>
