@@ -4,84 +4,65 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script src="jquery-3.1.0.min.js"></script>
-    <script src="../src/jquery.vpage.min.js"></script>
-    <script>
-        $(function (){
+    <script src="../src/jquery.vpage.js"></script>
+    <style>
+        .item {
+            display: inline-block;
+            border: 1px solid #FFE7E7;
+            text-decoration: none;
+            color: black;
+            font-family: "微軟正黑體";
+            padding: 10px 30px;
+        }
+    </style>
+<script>
+$(function (){
 
-            // 設定 A 觸發
-            $(".my_first_A").vpage({
-                name: "page1",
-                url: "?onload=page1",
-                state: {a:1},
-                onload:  function (){
-                    alert('onload 1')
-                },
-                onpop:  function (){
-                    alert('pop 1');
-                },
-                event: 'click', 
-                before: function (){
-                    alert("click 1")
-                }
+    function _bg_color(selector)
+    {
+        $(".item").removeAttr("style");
+        $(selector).css("background", "#FC5A5A"); 
+        $(selector).css("color", "white"); 
+    }
 
-            });
+    $(".item").vpage({
+        name: 'button',
+        event: 'click',
+        state:{},
+        prepare: function (){
 
-            // 設定 B 觸發
-            $(".my_first_B").vpage({
-                name: "page2",
-                url: "?onload=page2",
-                state: {a:2},
-                onload:  function (){
-                    alert('onload 2')
-                },
-                onpop:  function (){
-                    alert('pop 2');
-                },
-                event: 'click', 
-                before: function (){
-                    alert("click 2")
-                }
-            });
+            // 動態變換網址
+            var type = $(this).attr("data-type");
+            $.vpage.set("button", "url", "?onload=button&type="+type);
 
-            // 設定 C 觸發，動態改變 url
-            $(".my_first_C").vpage({
-                name: "page3",
-                state: {a:2},
-                onload:  function (){
-                    alert('onload 3')
-                },
-                onpop:  function (){
-                    alert('pop 3');
-                },
-                event: 'click', 
-                before: function (data){
-                    $.vpage.set("page3", "url", "?onload=page3&else=test");
-                    alert("click 3")
-                },
-                after : function (data){
-                    var newurl = $.vpage.get("page3", "url");
-                    alert("new_url: " + newurl);
-                }
-            });
+        },
+        do: function (data){
+            _bg_color(this);
+            return false;
+        },
+        onload: function (){
+            var data_type = $.vpage.api.get_url_param("type");
+            _bg_color(".item[data-type="+data_type+"]")
+        },
+        onpop: function (){
+            var data_type = $.vpage.api.get_url_param("type");
+            _bg_color(".item[data-type="+data_type+"]")
+        },
+        reset: function (){
+            $(".item").removeAttr("style");
+        }
+    })
 
-            
+    $.vpage.listen();
 
 
-
-            // 監聽事件
-            $.vpage.listen();
-
-            // 手動觸發
-            // $.vpage.trigger("page2", "onpop");
-
-        })
-    </script>
+})
+</script>
 </head>
 <body>
 
-    <a class="my_first_A">A</a> <br>
-    <a class="my_first_B">B</a> <br>
-    <a class="my_first_C">C</a> <br>
-    
+    <a href="" class="item" data-type="news">最新消息</a>
+    <a href="" class="item" data-type="about">關於</a>
+
 </body>
 </html>

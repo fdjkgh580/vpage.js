@@ -1,6 +1,6 @@
 (function ( $ ) {
 
-    var version = "1.0.0";
+    var version = "1.0.1";
 
     $.vpage = {};
     $.vpage.storage = {}
@@ -9,6 +9,7 @@
 
         // 添加新的辨識
         this.add_state = function (param){
+            if (!param.state) param.state = {};
             param.state.vpage_name = param.name;
             return param.state;
         }
@@ -28,7 +29,7 @@
                     return sParameterName[1];
                 }
             }
-        }​
+        }
 
         /**
          * 畫面進入時所觸發的事件
@@ -38,7 +39,6 @@
 
             // 取得 GET 的 onload 值，作為辨識的鍵
             var vpage_name = $.vpage.api.get_url_param("onload");
-
             if (vpage_name) {
                 //呼叫對應的 onload()
                 $.vpage.storage[vpage_name].onload();
@@ -52,16 +52,30 @@
          */
         this.onpop = function (){
 
+            // 提供上下切換回到初始時，需要用到的 storage
+            var memory;
+
             window.onpopstate  = function (event){
                 //如果有放入堆疊的話才執行
                 if (history.state && history.state.vpage_name){
                     var key = $.vpage.api.key();
                     var obj = $.vpage.storage[key];
-                    obj.onpop();
+                    memory = obj;
+                    obj.onpop.call();
+                    alert('onpopstate')
+                    
                 }
-                return $.vpage.api;
+                // 代表初次
+                else {
+                    alert('reset')
+                    memory.reset();                    
+                    
+                }
             }
+            return $.vpage.api;
+        }
 
+        this.reset = function (){
         }
 
     }
@@ -106,10 +120,10 @@
     /**
      * [vpage description]
      * @param  param.name                      為該模型命名
-     * @param  param.state                     history.pushState 物件     
+     * @param  param.state                     (選)history.pushState 物件     
      * @param  param.event                     on 的事件
-     * @param  param.before(this, param)       (選)on 回呼
-     * @param  param.after(this, param)        (選)on 回呼
+     * @param  param.prepare(param)       (選)on 回呼
+     * @param  param.do(param)        (選)on 回呼
      * @param  param.title                     (選)變更的網頁標題
      * @param  param.url                       (選)變更的網址
      * @param  param.onload                    (選)
@@ -122,13 +136,13 @@
 
         this.on(param.event, function (){
 
-            if (param.before) param.before(this, param);
+            if (param.prepare) param.prepare.call(this, param);
 
             param.state = $.vpage.api.add_state(param);
 
             history.pushState(param.state, param.title, param.url);
 
-            if (param.after) param.after(this, param);
+            if (param.do) return param.do.call(this, param);
         })
     }
 
