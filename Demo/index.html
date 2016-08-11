@@ -28,7 +28,7 @@ $(function (){
     $(".item").vpage({
         name: 'button',
         event: 'click',
-        state:{},
+        state:{a:1},
         prepare: function (){
 
             // 動態變換網址
@@ -47,10 +47,8 @@ $(function (){
         onpop: function (){
             var data_type = $.vpage.api.get_url_param("type");
             _bg_color(".item[data-type="+data_type+"]")
-        },
-        reset: function (){
-            $(".item").removeAttr("style");
         }
+        
     })
 
     $.vpage.listen();

@@ -52,31 +52,22 @@
          */
         this.onpop = function (){
 
-            // 提供上下切換回到初始時，需要用到的 storage
-            var memory;
-
             window.onpopstate  = function (event){
                 //如果有放入堆疊的話才執行
                 if (history.state && history.state.vpage_name){
                     var key = $.vpage.api.key();
                     var obj = $.vpage.storage[key];
-                    memory = obj;
                     obj.onpop.call();
-                    alert('onpopstate')
-                    
+
                 }
-                // 代表初次
                 else {
-                    alert('reset')
-                    memory.reset();                    
-                    
+                    alert()
                 }
+                
             }
             return $.vpage.api;
         }
 
-        this.reset = function (){
-        }
 
     }
 
@@ -125,21 +116,30 @@
      * @param  param.prepare(param)       (選)on 回呼
      * @param  param.do(param)        (選)on 回呼
      * @param  param.title                     (選)變更的網頁標題
-     * @param  param.url                       (選)變更的網址
      * @param  param.onload                    (選)
      * @param  param.onpop                     (選)
      */
     $.fn.vpage = function (param){
 
+        // 禁止輸入 url 
+        if (param.url) {
+            console.log('Error: param.url')
+            return false;
+        }
+
         // 將設定放到倉儲，使用 vpage 的名稱作為鍵
         $.vpage.storage[param.name] = param;
+
+        // 初次進入，就先將參數放置到 history.state 紀錄
+        param.state = $.vpage.api.add_state(param);
+        history.pushState(param.state, param.title, param.url);
 
         this.on(param.event, function (){
 
             if (param.prepare) param.prepare.call(this, param);
 
+            // 覆蓋
             param.state = $.vpage.api.add_state(param);
-
             history.pushState(param.state, param.title, param.url);
 
             if (param.do) return param.do.call(this, param);
