@@ -70,9 +70,7 @@
 
     // 監聽 vpage 設定的 onload 與 onpop 事件
     $.vpage.listen = function(){
-
         $.vpage.api.onload().onpop();
-
     }
 
     /**
@@ -99,18 +97,23 @@
         return $.vpage.storage[name][key];
     }
 
+    // 直接修改網址
+    $.vpage.url = function (url){
+        history.pushState(false, false, url);
+    }
+
 
     /**
      * [vpage description]
-     * @param  param.name       為該模型命名
-     * @param  param.state      history.pushState 物件     
-     * @param  param.event      on 的事件
-     * @param  param.before()   (選)on 回呼
-     * @param  param.after()    (選)on 回呼
-     * @param  param.title      (選)變更的網頁標題
-     * @param  param.url        (選)變更的網址
-     * @param  param.onload     (選)
-     * @param  param.onpop      (選)
+     * @param  param.name                      為該模型命名
+     * @param  param.state                     history.pushState 物件     
+     * @param  param.event                     on 的事件
+     * @param  param.before(this, param)       (選)on 回呼
+     * @param  param.after(this, param)        (選)on 回呼
+     * @param  param.title                     (選)變更的網頁標題
+     * @param  param.url                       (選)變更的網址
+     * @param  param.onload                    (選)
+     * @param  param.onpop                     (選)
      */
     $.fn.vpage = function (param){
 
@@ -119,13 +122,13 @@
 
         this.on(param.event, function (){
 
-            if (param.before) param.before(param);
+            if (param.before) param.before(this, param);
 
             param.state = $.vpage.api.add_state(param);
 
             history.pushState(param.state, param.title, param.url);
 
-            if (param.after) param.after(param);
+            if (param.after) param.after(this, param);
         })
     }
 
