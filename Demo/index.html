@@ -11,12 +11,10 @@
         }
         .item {
             display: inline-block;
-            border: 1px solid #FFE7E7;
+            border: 1px solid #FC7474;
             text-decoration: none;
             color: black;
             padding: 10px 30px;
-            background: #d64e4e;
-            color: white;
             border-radius: 7px;
         }
         .message {
@@ -34,30 +32,19 @@ $(function (){
         $(selector).css("color", "white"); 
     }
 
+
     $(".item").vpage({
 
-        // 取一個唯一名稱作為辨識
-        name: 'button_color',
-
-        // 綁定的事件
+        name: 'my_button',
         event: 'click',
 
-        // 記錄在 window.history.state 的物件 
-        state: {}, 
-
-        // 網頁變更的
-        title: "",
-
-        // 觸發 do() 之前的準備動作
         prepare: function (){
 
-            // 動態變換網址
+            // 動態組合網址
             var type = $(this).attr("data-type");
-            $.vpage.set("button_color", "url", "?onload=button_color&type="+type);
-
+            $.vpage.set("my_button", "url", "?onload=my_button&type="+type);
         },
         
-        // 觸發時所要執行的動作
         do: function (data){
 
             //點擊的變色
@@ -65,17 +52,14 @@ $(function (){
             return false;
         },
 
-        // 一旦進入頁面時的動作
         onload: function (){
-            //從網址找到要換色的按鈕是誰
-            var data_type = $.vpage.api.get_url_param("type");
-            _set_color(".item[data-type="+data_type+"]")
+            var data_type = $.vpage.get_url_param("type");
+            _set_color(".item[data-type="+data_type+"]");
         },
         
-        // 上下頁切換時的動作
         onpop: function (){
-            var data_type = $.vpage.api.get_url_param("type");
-            _set_color(".item[data-type="+data_type+"]")
+            var data_type = $.vpage.get_url_param("type");
+            _set_color(".item[data-type="+data_type+"]");
         }
         
     })

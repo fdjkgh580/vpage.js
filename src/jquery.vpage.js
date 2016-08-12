@@ -4,9 +4,20 @@
 
     $.vpage = {};
     $.vpage.storage = {}
+    $.vpage.is_listen = false;
 
     $.vpage.api = new function (){
 
+        // 設定監聽了？
+        this.is_set_listen = function (){
+            if ($.vpage.is_listen === false) {
+                console.log('vpage 還未設定 listen() ');
+                return false;
+            }
+            return true;
+        }
+
+        // 確認參數的合法性
         this.check_param = function (param){
             try {
 
@@ -18,6 +29,7 @@
                 else if (param.onload === undefined) throw '請指定參數 param.onload';
                 else if (param.onpop === undefined) throw '請指定參數 param.onpop';
 
+
             } catch (err){
                 console.log('Error: ' + err);
                 return false;
@@ -28,6 +40,8 @@
         this.auto_set_url = function (usethis, name){
             if ($(usethis).get(0).tagName != "A") return false;
             var href = $(usethis).attr("href");
+
+
             $.vpage.set(name, "url", href);
             return href;
         }
@@ -48,15 +62,18 @@
 
         /**
          * 畫面進入時所觸發的事件
-         * 若要啟用，網址需要夾帶有 GET 參數 "onload"
+         * 若要被觸發這個事件，網址需要夾帶有 GET 參數 "onload"，值需要指定 vpage 的 name 參數。
          */
         this.onload = function (){
 
             // 取得 GET 的 onload 值，作為辨識的鍵
             var vpage_name = $.vpage.get_url_param("onload");
             if (vpage_name) {
+
                 //呼叫對應的 onload()
-                $.vpage.storage[vpage_name].onload();
+                if ($.vpage.storage[vpage_name] !== undefined) {
+                    $.vpage.storage[vpage_name].onload();
+                }
             }
 
             return $.vpage.api;
@@ -76,13 +93,19 @@
 
                 }
                 else {
-                    alert()
+                    // 不應該進入這個判斷。
+                    console.log('System Error.');
                 }
                 
             }
             return $.vpage.api;
         }
 
+        // 將參數放置到 history.state 紀錄
+        this.push_state = function (param){
+            param.state = $.vpage.api.add_state(param);
+            history.pushState(param.state, param.title, param.url);
+        }
 
     }
 
@@ -98,9 +121,14 @@
         }
     }
 
-    // 監聽 vpage 設定的 onload 與 onpop 事件
+    /**
+     * 監聽 vpage 設定的 onload 與 onpop 事件，
+     * 須要放置在所有的 vpage 最後。
+     */
     $.vpage.listen = function(){
-        $.vpage.api.onload().onpop();
+        $.vpage.is_listen = true;
+        $.vpage.api.onload();
+        $.vpage.api.onpop();
     }
 
     /**
@@ -117,34 +145,40 @@
         }
     }
 
-    // 設定
+    /**
+     * 設定參數
+     * @param  name     vpage 的名稱
+     * @param  key      參數的鍵
+     * @param  val      參數的值
+     */
     $.vpage.set = function (name, key, val){
         $.vpage.storage[name][key] = val;
     }
 
-    // 取得設定
+    /**
+     * 取得參數
+     * @param  name     vpage 的名稱
+     * @param  key      參數的鍵
+     */
     $.vpage.get = function (name, key){
         return $.vpage.storage[name][key];
-    }
-
-    // 直接修改網址
-    $.vpage.url = function (url){
-        history.pushState(false, false, url);
     }
 
 
     /**
      * [vpage description]
      * @param  param.name                      為該模型命名
-     * @param  param.state                     (選)history.pushState 物件     
      * @param  param.event                     on 的事件
-     * @param  param.prepare(param)            (選)on 回呼
-     * @param  param.do(param)                 on 回呼
+     * @param  param.do(param)                 觸發時的動作
+     * @param  param.onload                    畫面進入時所觸發的事件
+     * @param  param.onpop                     切換上下頁面所觸發的事件
+     * @param  param.state                     (選)history.pushState 物件     
+     * @param  param.prepare(param)            (選)觸發事件前的準備動作
      * @param  param.title                     (選)變更的網頁標題
-     * @param  param.onload                    
-     * @param  param.onpop                     
      */
     $.fn.vpage = function (param){
+
+        
 
         $.vpage.api.check_param(param);
 
@@ -152,22 +186,27 @@
         $.vpage.storage[param.name] = param;
 
         // 初次進入，就先將參數放置到 history.state 紀錄
-        param.state = $.vpage.api.add_state(param);
-        history.pushState(param.state, param.title, param.url);
+        $.vpage.api.push_state(param);
 
+        // 綁定使用者指派的事件
         this.on(param.event, function (){
+
+            // 設定監聽了？
+            if ($.vpage.api.is_set_listen() === false) return false;
 
             // 判斷自動設定網址
             $.vpage.api.auto_set_url(this, param.name);
 
+            // 準備動作
             if (param.prepare) param.prepare.call(this, param);
 
             // 因為會被動態修改參數，所以要再次覆蓋
-            param.state = $.vpage.api.add_state(param);
-            history.pushState(param.state, param.title, param.url);
+            $.vpage.api.push_state(param);
 
+            // 觸發動作
             if (param.do) return param.do.call(this, param);
         })
+
     }
 
 }( jQuery ));
