@@ -109,6 +109,11 @@
 
     }
 
+    // 版本
+    $.vpage.version = function (){
+        return version;
+    }
+
     // 取得網址的 get 參數，例如 ?
     $.vpage.get_url_param = function (key){
         var sPageURL = window.location.search.substring(1);
@@ -175,10 +180,10 @@
      * @param  param.state                     (選)history.pushState 物件     
      * @param  param.prepare(param)            (選)觸發事件前的準備動作
      * @param  param.title                     (選)變更的網頁標題
+     * @param  param.url                       private 網址不可由外部參數指定。需要透過 $.vpage.set()
      */
     $.fn.vpage = function (param){
 
-        
 
         $.vpage.api.check_param(param);
 

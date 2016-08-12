@@ -38,14 +38,15 @@ $(function (){
         name: 'my_button',
         event: 'click',
 
-        prepare: function (){
+        prepare: function (param){
 
             // 動態組合網址
             var type = $(this).attr("data-type");
             $.vpage.set("my_button", "url", "?onload=my_button&type="+type);
+
         },
         
-        do: function (data){
+        do: function (param){
 
             //點擊的變色
             _set_color(this);
@@ -64,6 +65,7 @@ $(function (){
         
     })
 
+    // 設置監聽
     $.vpage.listen();
 
 
