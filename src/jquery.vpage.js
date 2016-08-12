@@ -7,6 +7,31 @@
 
     $.vpage.api = new function (){
 
+        this.check_param = function (param){
+            try {
+
+                // 禁止輸入 url 
+                if (param.url !== undefined) throw '請勿指定參數 param.url';
+                else if (param.name === undefined) throw '請指定參數 param.name';
+                else if (param.event === undefined) throw '請指定參數 param.event';
+                else if (param.do === undefined) throw '請指定參數 param.do';
+                else if (param.onload === undefined) throw '請指定參數 param.onload';
+                else if (param.onpop === undefined) throw '請指定參數 param.onpop';
+
+            } catch (err){
+                console.log('Error: ' + err);
+                return false;
+            }
+        }
+
+        // 如果是標籤 a 就自動設定網址
+        this.auto_set_url = function (usethis, name){
+            if ($(usethis).get(0).tagName != "A") return false;
+            var href = $(usethis).attr("href");
+            $.vpage.set(name, "url", href);
+            return href;
+        }
+
         // 添加新的辨識
         this.add_state = function (param){
             if (!param.state) param.state = {};
@@ -19,17 +44,7 @@
             return history.state.vpage_name;
         }
 
-        // 取得網址的 get 參數，例如 ?
-        this.get_url_param = function (key){
-            var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++){
-                var sParameterName = sURLVariables[i].split('=');
-                if (sParameterName[0] == key){
-                    return sParameterName[1];
-                }
-            }
-        }
+        
 
         /**
          * 畫面進入時所觸發的事件
@@ -38,7 +53,7 @@
         this.onload = function (){
 
             // 取得 GET 的 onload 值，作為辨識的鍵
-            var vpage_name = $.vpage.api.get_url_param("onload");
+            var vpage_name = $.vpage.get_url_param("onload");
             if (vpage_name) {
                 //呼叫對應的 onload()
                 $.vpage.storage[vpage_name].onload();
@@ -71,7 +86,17 @@
 
     }
 
-    
+    // 取得網址的 get 參數，例如 ?
+    $.vpage.get_url_param = function (key){
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++){
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == key){
+                return sParameterName[1];
+            }
+        }
+    }
 
     // 監聽 vpage 設定的 onload 與 onpop 事件
     $.vpage.listen = function(){
@@ -113,19 +138,15 @@
      * @param  param.name                      為該模型命名
      * @param  param.state                     (選)history.pushState 物件     
      * @param  param.event                     on 的事件
-     * @param  param.prepare(param)       (選)on 回呼
-     * @param  param.do(param)        (選)on 回呼
+     * @param  param.prepare(param)            (選)on 回呼
+     * @param  param.do(param)                 on 回呼
      * @param  param.title                     (選)變更的網頁標題
-     * @param  param.onload                    (選)
-     * @param  param.onpop                     (選)
+     * @param  param.onload                    
+     * @param  param.onpop                     
      */
     $.fn.vpage = function (param){
 
-        // 禁止輸入 url 
-        if (param.url) {
-            console.log('Error: param.url')
-            return false;
-        }
+        $.vpage.api.check_param(param);
 
         // 將設定放到倉儲，使用 vpage 的名稱作為鍵
         $.vpage.storage[param.name] = param;
@@ -136,9 +157,12 @@
 
         this.on(param.event, function (){
 
+            // 判斷自動設定網址
+            $.vpage.api.auto_set_url(this, param.name);
+
             if (param.prepare) param.prepare.call(this, param);
 
-            // 覆蓋
+            // 因為會被動態修改參數，所以要再次覆蓋
             param.state = $.vpage.api.add_state(param);
             history.pushState(param.state, param.title, param.url);
 

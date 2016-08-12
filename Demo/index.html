@@ -6,19 +6,28 @@
     <script src="jquery-3.1.0.min.js"></script>
     <script src="../src/jquery.vpage.js"></script>
     <style>
+        * {
+            font-family: "微軟正黑體";
+        }
         .item {
             display: inline-block;
             border: 1px solid #FFE7E7;
             text-decoration: none;
             color: black;
-            font-family: "微軟正黑體";
             padding: 10px 30px;
+            background: #d64e4e;
+            color: white;
+            border-radius: 7px;
+        }
+        .message {
+            margin: 5px 0px;
         }
     </style>
 <script>
 $(function (){
 
-    function _bg_color(selector)
+    // 變換按鈕顏色
+    function _set_color(selector)
     {
         $(".item").removeAttr("style");
         $(selector).css("background", "#FC5A5A"); 
@@ -26,27 +35,47 @@ $(function (){
     }
 
     $(".item").vpage({
-        name: 'button',
+
+        // 取一個唯一名稱作為辨識
+        name: 'button_color',
+
+        // 綁定的事件
         event: 'click',
-        state:{a:1},
+
+        // 記錄在 window.history.state 的物件 
+        state: {}, 
+
+        // 網頁變更的
+        title: "",
+
+        // 觸發 do() 之前的準備動作
         prepare: function (){
 
             // 動態變換網址
             var type = $(this).attr("data-type");
-            $.vpage.set("button", "url", "?onload=button&type="+type);
+            $.vpage.set("button_color", "url", "?onload=button_color&type="+type);
 
         },
+        
+        // 觸發時所要執行的動作
         do: function (data){
-            _bg_color(this);
+
+            //點擊的變色
+            _set_color(this);
             return false;
         },
+
+        // 一旦進入頁面時的動作
         onload: function (){
+            //從網址找到要換色的按鈕是誰
             var data_type = $.vpage.api.get_url_param("type");
-            _bg_color(".item[data-type="+data_type+"]")
+            _set_color(".item[data-type="+data_type+"]")
         },
+        
+        // 上下頁切換時的動作
         onpop: function (){
             var data_type = $.vpage.api.get_url_param("type");
-            _bg_color(".item[data-type="+data_type+"]")
+            _set_color(".item[data-type="+data_type+"]")
         }
         
     })
@@ -60,7 +89,7 @@ $(function (){
 <body>
 
     <a href="" class="item" data-type="news">最新消息</a>
-    <a href="" class="item" data-type="about">關於</a>
+    <a href="" class="item" data-type="about">關於我們</a>
 
 </body>
 </html>

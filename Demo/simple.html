@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jquery-3.1.0.min.js"></script>
+    <script src="../src/jquery.vpage.js"></script>
+    <style>
+        * {
+            font-family: "微軟正黑體";
+        }
+        .item {
+            display: inline-block;
+            border: 1px solid #FFE7E7;
+            text-decoration: none;
+            color: black;
+            padding: 10px 30px;
+            background: #d64e4e;
+            color: white;
+            border-radius: 7px;
+        }
+        .message {
+            margin: 5px 0px;
+        }
+    </style>
+<script>
+$(function (){
+
+    
+
+    $(".item").vpage({
+        name: 'my_button',
+        event: 'click',
+        
+        do: function (data){
+            $(".message").text("您點擊了：" + $(this).text());
+            return false;
+        },
+        onload: function (){
+            var type = $.vpage.get_url_param("type");
+
+            if (type !== undefined) {
+                $(".message").text('當頁面讀取完畢後，觸發顯示這段文字。網址參數 type 的值是：' + type);
+            }
+            else {
+                $(".message").empty();
+            }
+        },
+        onpop: function (){
+            var type = $.vpage.get_url_param("type");
+
+            if (type !== undefined){
+                $(".message").text("觸發上下頁切換。網址參數 type 的值是：" + type);
+            }
+            else {
+                $(".message").empty();
+            }
+        }
+        
+    })
+
+    $.vpage.listen();
+
+
+})
+</script>
+</head>
+<body>
+    <a href="?onload=my_button&type=news" class="item news">最新消息</a>
+    <a href="?onload=my_button&type=about" class="item about">關於我們</a>
+    <div class="message"></div>
+
+</body>
+</html>
