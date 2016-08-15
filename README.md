@@ -2,6 +2,28 @@
 - vpage 是一個 jQuery 的 plugin 掛件。透過非常簡單的寫法，就能設計出與網址對應關係的動態事件。並且能讓瀏覽器的上下頁切換(window.onpopstate)、重新整理頁面後 (偽 history.state) 觸發指定的事件。
 - vpage 不包含 AJAX 處理，因此能搭配您習慣用的 AJAX 函式庫即可。
 
+## 範例
+````javascript
+$(selector).vpage({
+    name: 'my_button', // 該模型的唯一名稱
+    event: 'click', // 綁定的事件，參考 jQuery 的 .on() 方法
+    url_get_onload_key: 'call_vpage_name', // 提供網址一個觸發 vpage 的 GET 參數鍵如 ?call_vpage_name=my_button
+    prepare: function (param){
+        // 事件觸發前的動作
+    },
+    do: function (param){
+        // 事件觸發
+    },
+    onload: function (){
+        // 畫面進入後要觸發的事件
+        // 例如偵測到網址 ?call_vpage_name=my_button 會觸發
+    },
+    onpop: function (){
+        // 上下頁切換觸發的事件
+    }
+})
+````
+
 ## $.vpage.version()
 取得當前版本
 
@@ -174,27 +196,6 @@ $(".item").vpage({
     </tr>
 </table>
 
-簡單的模板介紹
-````javascript
-$(selector).vpage({
-    name: 'my_button', // 該模型的唯一名稱
-    event: 'click', // 綁定的事件，參考 jQuery 的 .on() 方法
-    url_get_onload_key: 'call_vpage_name', // 提供網址一個觸發 vpage 的 GET 參數鍵如 ?call_vpage_name=my_button
-    prepare: function (param){
-        // 事件觸發前的動作
-    },
-    do: function (param){
-        // 事件觸發
-    },
-    onload: function (){
-        // 畫面進入後要觸發的事件
-        // 例如偵測到網址 ?call_vpage_name=my_button 會觸發
-    },
-    onpop: function (){
-        // 上下頁切換觸發的事件
-    }
-})
-````
 
 ## 參考範例
 - [簡單範例](http://creation.kiiuo.com/vpage/Demo/simple.html)  
