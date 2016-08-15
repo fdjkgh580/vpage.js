@@ -1,8 +1,9 @@
 # vpage
-$.vpage 不需要重新整理頁面的換頁設計
+透過簡單的處理，讓您不需要重新整理頁面的動態事件切換。並且讓瀏覽器的上下頁切換(window.onpopstate)、重新整理頁面後 (偽 history.state) ，都能觸發指定的事件。
+vpage 不包含 AJAX 處理，因此能搭配您習慣用的 AJAX 函式庫即可。
 
 ## $.vpage.version()
-取得版本  
+取得當前版本
 
 ## $.vpage.get_url_param(key)
 取得網址的 GET 參數     
