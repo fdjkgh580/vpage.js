@@ -174,6 +174,27 @@ $(".item").vpage({
     </tr>
 </table>
 
+簡單的模板介紹
+````javascript
+$(selector).vpage({
+    name: 'my_button', // 該模型的唯一名稱
+    event: 'click', // 綁定的事件，參考 jQuery 的 .on() 方法
+    url_get_onload_key: 'call_vpage_name', // 提供網址一個觸發 vpage 的 GET 參數鍵
+    prepare: function (param){
+        // 事件觸發前的動作
+    },
+    do: function (param){
+        // 事件觸發
+    },
+    onload: function (){
+        // 畫面進入後要觸發的事件
+    },
+    onpop: function (){
+        // 上下頁切換觸發的事件
+    }
+})
+````
+
 ## 參考範例
 - [簡單範例](http://creation.kiiuo.com/vpage/Demo/simple.html)  
 - [建議的明確的標準寫法](http://creation.kiiuo.com/vpage/Demo/standard.html)  
