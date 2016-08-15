@@ -113,6 +113,11 @@ $(".item").vpage({
     ......
 })
 ````
+    
+也可以使用簡單 <a href=""> 的寫法
+````html
+<a href="?onload=my_button&type=news" class="item news">最新消息</a>
+````
 
 ## $(selector).vpage(param);
 針對元素綁定事件
