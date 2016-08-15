@@ -1,9 +1,16 @@
 (function ( $ ) {
 
-    var version = "1.0.1";
+    var version = "1.0.2";
+
+    // 提供 onload 辨識的鍵，預設 onload 
+    var url_get_onload_key;
 
     $.vpage = {};
+
+    // 倉儲存放
     $.vpage.storage = {}
+
+    // 是否已經設置監聽
     $.vpage.is_listen = false;
 
     $.vpage.api = new function (){
@@ -21,6 +28,10 @@
         this.check_param = function (param){
             try {
 
+                param = $.extend({
+                    url_get_onload_key: 'onload'
+                }, param);
+
                 // 禁止輸入 url 
                 if (param.url !== undefined) throw '請勿指定參數 param.url';
                 else if (param.name === undefined) throw '請指定參數 param.name';
@@ -29,6 +40,9 @@
                 else if (param.onload === undefined) throw '請指定參數 param.onload';
                 else if (param.onpop === undefined) throw '請指定參數 param.onpop';
 
+                url_get_onload_key = param.url_get_onload_key;
+
+                console.log(param)
 
             } catch (err){
                 console.log('Error: ' + err);
@@ -62,12 +76,14 @@
 
         /**
          * 畫面進入時所觸發的事件
-         * 若要被觸發這個事件，網址需要夾帶有 GET 參數 "onload"，值需要指定 vpage 的 name 參數。
+         * 若要被觸發這個事件，網址需要夾帶有 GET 參數鍵 url_get_onload_key ，值需要指定 vpage 的 name 參數。
+         * 例如 http://domain.com?onload=my_button
          */
         this.onload = function (){
 
             // 取得 GET 的 onload 值，作為辨識的鍵
-            var vpage_name = $.vpage.get_url_param("onload");
+            var vpage_name = $.vpage.get_url_param(url_get_onload_key);
+
             if (vpage_name) {
 
                 //呼叫對應的 onload()
@@ -157,15 +173,35 @@
      * @param  val      參數的值
      */
     $.vpage.set = function (name, key, val){
+        var storage = $.vpage.storage[name];
+        if (storage === undefined) {
+            console.log('找不到指定的 vpage = ' + name);
+            return false;
+        }
         $.vpage.storage[name][key] = val;
     }
 
     /**
      * 取得參數
-     * @param  name     vpage 的名稱
-     * @param  key      參數的鍵
+     * @param  name     (選)vpage 的名稱，不指定返回全部
+     * @param  key      (選)參數的鍵，不指定返回全部
      */
     $.vpage.get = function (name, key){
+
+        if (name === undefined) return $.vpage.storage;
+
+        if (key === undefined) {
+
+            // 找不到 vpage
+            var storage = $.vpage.storage[name];
+            if (storage === undefined) {
+                return false;
+            }
+
+            // 返回所有參數
+            return $.vpage.storage[name];
+        }
+
         return $.vpage.storage[name][key];
     }
 

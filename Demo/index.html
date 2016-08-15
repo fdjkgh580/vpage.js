@@ -3,79 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="jquery-3.1.0.min.js"></script>
-    <script src="../src/jquery.vpage.js"></script>
-    <style>
-        * {
-            font-family: "微軟正黑體";
-        }
-        .item {
-            display: inline-block;
-            border: 1px solid #FC7474;
-            text-decoration: none;
-            color: black;
-            padding: 10px 30px;
-            border-radius: 7px;
-        }
-        .message {
-            margin: 5px 0px;
-        }
-    </style>
-<script>
-$(function (){
-
-    // 變換按鈕顏色
-    function _set_color(selector)
-    {
-        $(".item").removeAttr("style");
-        $(selector).css("background", "#FC5A5A"); 
-        $(selector).css("color", "white"); 
-    }
-
-
-    $(".item").vpage({
-
-        name: 'my_button',
-        event: 'click',
-
-        prepare: function (param){
-
-            // 動態組合網址
-            var type = $(this).attr("data-type");
-            $.vpage.set("my_button", "url", "?onload=my_button&type="+type);
-
-        },
-        
-        do: function (param){
-
-            //點擊的變色
-            _set_color(this);
-            return false;
-        },
-
-        onload: function (){
-            var data_type = $.vpage.get_url_param("type");
-            _set_color(".item[data-type="+data_type+"]");
-        },
-        
-        onpop: function (){
-            var data_type = $.vpage.get_url_param("type");
-            _set_color(".item[data-type="+data_type+"]");
-        }
-        
-    })
-
-    // 設置監聽
-    $.vpage.listen();
-
-
-})
-</script>
 </head>
 <body>
-
-    <a href="" class="item" data-type="news">最新消息</a>
-    <a href="" class="item" data-type="about">關於我們</a>
-
+    
 </body>
 </html>

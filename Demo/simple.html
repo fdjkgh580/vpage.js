@@ -25,13 +25,9 @@
     </style>
 <script>
 $(function (){
-
-    
-
     $(".item").vpage({
         name: 'my_button',
         event: 'click',
-        
         do: function (data){
             $(".message").text("您點擊了：" + $(this).text());
             return false;
@@ -60,15 +56,19 @@ $(function (){
     })
 
     $.vpage.listen();
-
-
 })
 </script>
 </head>
 <body>
+    <p>
+        嘗試：查看網址的變化。分別點擊這兩顆按鈕、上下頁切換、重新整理視窗。
+    </p>
+
     <a href="?onload=my_button&type=news" class="item news">最新消息</a>
     <a href="?onload=my_button&type=about" class="item about">關於我們</a>
     <div class="message"></div>
+
+    <iframe width="100%" height="700" src="//jsfiddle.net/5gf1jwjg/6/embedded/js,html/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
 </body>
 </html>
