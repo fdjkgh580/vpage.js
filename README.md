@@ -24,6 +24,10 @@ $(selector).vpage({
 })
 ````
 
+## 更多範例
+- [簡單範例](http://creation.kiiuo.com/vpage/Demo/simple.html)  
+- [建議的明確的標準寫法](http://creation.kiiuo.com/vpage/Demo/standard.html)  
+
 ## $.vpage.version()
 取得當前版本
 
