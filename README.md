@@ -188,6 +188,7 @@ $(selector).vpage({
     },
     onload: function (){
         // 畫面進入後要觸發的事件
+        // 例如偵測到網址 ?call_vpage_name=my_button 會觸發
     },
     onpop: function (){
         // 上下頁切換觸發的事件
