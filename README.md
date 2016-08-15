@@ -56,6 +56,7 @@ $(".item").vpage({
 針對元素綁定事件
 @param.name string 為該模型命名  
 @param.event string 在元素綁定 on 的事件  
+@param.url_get_onload_key string 提供 onload 辨識的鍵，預設 onload 
 @param.do(param) function 觸發時的動作  
 @param.onload function 畫面進入時所觸發的事件  
 @param.onpop function 切換上下頁面所觸發的事件  
@@ -63,49 +64,6 @@ $(".item").vpage({
 @param.prepare(param) function (選)觸發事件前的準備動作  
 @param.title string (選)變更的網頁標題  
 
-## 一個簡單的範例
-````html
-<a href="" class="item" data-type="news">最新消息</a>
-<a href="" class="item" data-type="about">關於我們</a>
-````
-
-````javascript
-$(function (){
-    // 變換按鈕顏色
-    function _set_color(selector) {
-        $(".item").removeAttr("style");
-        $(selector).css("background", "#FC5A5A"); 
-        $(selector).css("color", "white"); 
-    }
-
-    $(".item").vpage({
-        name: 'my_button',
-        event: 'click',
-        prepare: function (param){
-            // 動態組合網址
-            var type = $(this).attr("data-type");
-            $.vpage.set("my_button", "url", "?onload=my_button&type="+type);
-        },
-        do: function (param){
-            //點擊的變色
-            _set_color(this);
-            return false;
-        },
-        onload: function (){
-            var data_type = $.vpage.get_url_param("type");
-            _set_color(".item[data-type="+data_type+"]");
-        },
-        onpop: function (){
-            var data_type = $.vpage.get_url_param("type");
-            _set_color(".item[data-type="+data_type+"]");
-        }
-    })
-
-    // 設置監聽
-    $.vpage.listen();
-})
-````
-
-
-
-
+參考範例
+[簡單範例](http://localhost/vpage/demo/simple.html)  
+[建議的明確的標準寫法](http://localhost/vpage/demo/standard.html)  
