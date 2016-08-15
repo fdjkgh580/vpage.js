@@ -179,7 +179,7 @@ $(".item").vpage({
 $(selector).vpage({
     name: 'my_button', // 該模型的唯一名稱
     event: 'click', // 綁定的事件，參考 jQuery 的 .on() 方法
-    url_get_onload_key: 'call_vpage_name', // 提供網址一個觸發 vpage 的 GET 參數鍵
+    url_get_onload_key: 'call_vpage_name', // 提供網址一個觸發 vpage 的 GET 參數鍵如 ?call_vpage_name=my_button
     prepare: function (param){
         // 事件觸發前的動作
     },
