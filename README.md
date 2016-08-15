@@ -103,7 +103,7 @@ $.vpage.get("my_button", "url")
 ````
 
 ## 動態替換網址的建議方法
-請不要直接使用 history.pushState() ，配合 $.vpage.set() 的方式指定才能有效操作。
+請不要直接使用 JavaScript 原生的 history.pushState() 切換網址，應該配合 $.vpage.set() 的方式指定才能有效操作。
 ````javascript
 $(".item").vpage({
     ......
