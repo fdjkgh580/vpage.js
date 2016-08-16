@@ -10,7 +10,7 @@
 <script src="src/jquery.vpage.min.js"></script>
 ````
 
-## Bower 安裝
+## 透過 Bower 安裝
 - 在你的專案目錄底下建立 bower.json    
 ````json
 {
@@ -21,7 +21,7 @@
     }
 }
 ````
-- 接著打上 #bower install# 執行安裝
+- 接著打上 bower install 執行安裝
 
 
 ## 範例
