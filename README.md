@@ -10,6 +10,20 @@
 <script src="src/jquery.vpage.min.js"></script>
 ````
 
+## Bower 安裝
+- 在你的專案目錄底下建立 bower.json    
+````json
+{
+    "name": "你的專案名稱",
+    "version": "你的版本編號",
+    "dependencies": {
+        "vpage.js" : "*"
+    }
+}
+````
+- 接著打上 #bower install# 執行安裝
+
+
 ## 範例
 ````javascript
 $(selector).vpage({
