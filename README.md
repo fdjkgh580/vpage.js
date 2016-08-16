@@ -1,6 +1,14 @@
 # vpage.js 
-- vpage 是一個 jQuery 的 plugin 掛件。透過非常簡單的寫法，就能設計出與網址對應關係的動態事件。並且能讓瀏覽器的上下頁切換(window.onpopstate)、重新整理頁面後 (偽 history.state) 觸發指定的事件。
-- vpage 不包含 AJAX 處理，因此能搭配您習慣用的 AJAX 函式庫即可。
+- vpage 是一個 jQuery 的 plugin 掛件
+- 透過簡單的寫法，設計出與網址對應的動態事件
+- 能讓瀏覽器的上下頁切換 (window.onpopstate)、重新整理頁面後 (偽 history.state) 觸發指定的事件
+- vpage 不包含 AJAX 處理
+
+## 安裝方式
+````html
+<script src="jquery-3.1.0.min.js"></script>
+<script src="src/jquery.vpage.min.js"></script>
+````
 
 ## 範例
 ````javascript
@@ -25,11 +33,14 @@ $(selector).vpage({
 ````
 
 ## 更多範例
-- [簡單範例](http://creation.kiiuo.com/vpage/Demo/simple.html)  
-- [建議的明確的標準寫法](http://creation.kiiuo.com/vpage/Demo/standard.html)  
+- [簡單](http://creation.kiiuo.com/vpage/Demo/simple.html)  
+- [建議](http://creation.kiiuo.com/vpage/Demo/standard.html)  
 
 ## $.vpage.version()
 取得當前版本
+````javascript
+var version = $.vpage.version();
+````
 
 ## $.vpage.get_url_param(key)
 取得網址的 GET 參數     
@@ -47,12 +58,13 @@ $(selector).vpage({
 </table>
 
 ````javascript
-// http://domain.com?onload=hello_world
+// http://domain.com?onload=hello_world&type=news
 $.vpage.get_url_param("onload"); // hello_world
+$.vpage.get_url_param("type"); // news
 ````
 
 ## $.vpage.listen()  
-監聽 vpage 設定的頁面讀取事件 onload 與 上下頁切換觸發事件 onpop。須要放置在所有的 vpage   最後，這樣當頁面讀取、上下頁切換的時候才能被觸發。  
+須要放置在所有的 vpage 最後。用來監聽 vpage 設定的頁面讀取事件(onload)與上下頁切換事件 (onpop)。
 
 ## $.vpage.trigger(name, type);  
 提供手動觸發 vpage 的 onload() 與 onpop()    
@@ -125,7 +137,16 @@ $.vpage.set("my_button", "url", "?onload=my_button&type=news");
     </tr>
 </table>
 ````javascript
-$.vpage.get("my_button", "url")
+$(".item").vpage({
+    name: 'my_button',
+    prepare: function (param){
+        $.vpage.set("my_button", "url", "?call_vpage_name=my_button^type=news");
+    },
+    do: function (){
+        var url = $.vpage.get("my_button", "url"); // ?call_vpage_name=my_button^type=news
+    }
+    ......
+})
 ````
 
 ## 動態替換網址的建議方法
@@ -200,7 +221,3 @@ $(".item").vpage({
     </tr>
 </table>
 
-
-## 參考範例
-- [簡單範例](http://creation.kiiuo.com/vpage/Demo/simple.html)  
-- [建議的明確的標準寫法](http://creation.kiiuo.com/vpage/Demo/standard.html)  
