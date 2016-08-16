@@ -5,8 +5,8 @@
 - vpage 不包含 AJAX 處理
 
 ## 安裝方式
+將壓縮檔下載後放到指定目錄
 ````html
-<script src="jquery-3.1.0.min.js"></script>
 <script src="src/jquery.vpage.min.js"></script>
 ````
 
