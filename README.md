@@ -4,7 +4,7 @@
 - 能讓瀏覽器的上下頁切換 (window.onpopstate)、重新整理頁面後 (偽 history.state) 觸發指定的事件
 - vpage 不包含 AJAX 處理
 
-## 安裝方式
+## 一般安裝
 將壓縮檔下載後放到指定目錄
 ````html
 <script src="src/jquery.vpage.min.js"></script>
