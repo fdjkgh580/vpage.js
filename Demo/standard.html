@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
     <title>Document</title>
     <script src="jquery-3.1.0.min.js"></script>
     <script src="../src/jquery.vpage.js"></script>
@@ -19,6 +20,14 @@
         }
         .message {
             margin: 5px 0px;
+        }
+        .current_url {
+            background: #616161;
+            color: white;
+            line-height: 2em;
+            padding: 0 10px;
+            border-radius: 3px;
+            word-break: break-all;
         }
     </style>
 <script>
@@ -59,6 +68,10 @@ $(function (){
 
     // 設置監聽
     $.vpage.listen();
+
+    setInterval(function (){
+        $(".current_url").text(location.href);
+    }, 50);
 })
 </script>
 </head>
@@ -66,6 +79,8 @@ $(function (){
     <p>
         嘗試：查看網址的變化。分別點擊這兩顆按鈕、上下頁切換、重新整理視窗。
     </p>
+    <p class="current_url"></p>
+
 
     <a href="" class="item" data-type="news">最新消息</a>
     <a href="" class="item" data-type="about">關於我們</a>
