@@ -24,6 +24,7 @@ $(selector).vpage({
         // 上下頁切換觸發的事件
     }
 })
+````
 
 ## 更多範例
 - [簡單](http://creation.kiiuo.com/vpage/Demo/simple.html)  
