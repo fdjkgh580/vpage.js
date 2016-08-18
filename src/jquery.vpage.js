@@ -32,7 +32,6 @@
 
                 // 預設參數
                 param = $.extend({
-                    vs: this,
                     url_get_onload_key: 'onload'
                 }, param);
 
@@ -47,6 +46,8 @@
                 url_get_onload_key = param.url_get_onload_key;
 
                 // console.log(param)
+
+                return param;
 
             } catch (err){
                 console.log('Error: ' + err);
@@ -70,15 +71,6 @@
             param.state.vpage_name = param.name;
             return param.state;
         }
-
-        // 取得堆中的 vpage 名稱
-        this.key = function (key){
-            var val = history.state[key].vpage_name;
-            return val;
-        }
-
-
-
 
         
 
@@ -113,15 +105,30 @@
                 //如果有放入堆疊的話才執行
                 if (history.state){
                     // console.log(history.state)
-                    var key = $.vpage.api.key(cky);
-                    var obj = $.vpage.storage[key];
-                    console.log(key)
-                    obj.onpop.call();
+
+
+                    var key = false;
+
+                    // 從倉儲中搜尋。如果發現網址有，代表必須觸發
+                    $.each($.vpage.storage, function (vname, data){
+                        key = $.vpage.get_url_param(data.url_get_onload_key);
+
+                        if (key) return false;
+                    })
+
+
+                    if (key) {
+                        var obj = $.vpage.storage[key];
+                        obj.onpop.call();
+                    }
+                    else {
+                        $.vpage.default();
+                    }
 
                 }
                 else {
-                    // 不應該進入這個判斷。
-                    console.log('Default System');
+                    // 最初始
+                    $.vpage.default();
                 }
                 
             }
@@ -146,8 +153,6 @@
                 var newext = pushdata;
             }
 
-
-
             history.pushState(newext, param.title, param.url);
         }
 
@@ -160,14 +165,14 @@
 
     // 取得網址的 get 參數，例如 ?
     $.vpage.get_url_param = function (key){
-        var sPageURL = window.location.search.substring(1);
-        var sURLVariables = sPageURL.split('&');
-        for (var i = 0; i < sURLVariables.length; i++){
-            var sParameterName = sURLVariables[i].split('=');
-            if (sParameterName[0] == key){
-                return sParameterName[1];
-            }
+        var vars = {}, hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+           hash = hashes[i].split('=');
+           vars[hash[0]] = hash[1];
         }
+        return !key ? vars : vars[key];
     }
 
     /**
@@ -233,6 +238,9 @@
         return $.vpage.storage[name][key];
     }
 
+    // 總體預設方法
+    $.vpage.default = function (){}
+
 
     /**
      * [vpage description]
@@ -244,11 +252,12 @@
      * @param  param.state                     (選)history.pushState 物件     
      * @param  param.prepare(param)            (選)觸發事件前的準備動作
      * @param  param.title                     (選)變更的網頁標題
+     * @param  url_get_onload_key              (選)觸發 onpop 的鍵，預設 onload
      * @param  param.url                       private 網址不可由外部參數指定。需要透過 $.vpage.set()
      */
     $.fn.vpage = function (param){
 
-        $.vpage.api.check_param(param);
+        param = $.vpage.api.check_param(param);
 
         // 將設定放到倉儲，使用 vpage 的名稱作為鍵
         $.vpage.storage[param.name] = param;

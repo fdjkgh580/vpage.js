@@ -19,10 +19,20 @@ $(function (){
         $(".content").find(selector_target).removeClass("hidden");
     }
 
-    function _init(){
+    function _init_item(){
         $(".item").removeClass("selected");
+        $(".item[data-target=about]").addClass("selected");
         $(".content").find(".article").addClass("hidden");
-        $(".content").find(".welcome").removeClass("hidden");
+        $(".content").find(".article.about").removeClass("hidden");
+    }
+
+    function _init_box(){
+        $(".content").find(".box").removeClass("selected");
+    }
+
+    $.vpage.default = function (){
+        _init_item();
+        _init_box();
     }
 
 
@@ -47,9 +57,9 @@ $(function (){
         },
         onpop: function (){
             var target = $.vpage.get_url_param("target");
-            
+
             if (target === undefined) {
-                _init();
+                _init_item();
             }
             else {
                 _selected_item(".item[data-target="+target+"]");
@@ -64,24 +74,25 @@ $(function (){
     $(".box").vpage({
         name: "box",
         event: "click",
+        url_get_onload_key: "onload_2",
         vs: this,
         prepare: function (){
             var id = $(this).attr("id");
-            $.vpage.set("box", "url", "?onload=box&id=" + id);
+            $.vpage.set("box", "url", "?onload_2=box&id=" + id);
         },
         do: function (){
             var id = $(this).attr("id");
             $.vpage.get("box").selected(id);
         },
         onload: function (){
-            _init();
+            _init_item();
 
             var id = $.vpage.get_url_param("id");
             $.vpage.get("box").selected(id);
         },
         onpop: function (){
+            _init_item()            
             var id = $.vpage.get_url_param("id");
-            // alert(id)
             $.vpage.get("box").selected(id);
         },
         selected: function (id){
@@ -96,8 +107,11 @@ $(function (){
     $.vpage.listen();
 
 
-    if ($.vpage.get_url_param("onload") === undefined) {
-        _init();
+
+
+    if (!$.vpage.get_url_param("onload") || !$.vpage.get_url_param("onload_2")) {
+        _init_item();
+        _init_box();
     }
 
 })
@@ -114,7 +128,7 @@ $(function (){
             <a class="item" href="" data-target="profile">項目05</a>
         </header>
         <div class="content">
-            <div class="article welcome hidden">
+            <div class="article about hidden">
                 <div class="text">歡迎使用 Vpage.js</div>
                 <div class="box" id="1"></div>
                 <div class="box" id="2"></div>
@@ -122,7 +136,6 @@ $(function (){
                 <div class="box" id="4"></div>
                 <div class="box" id="5"></div>
             </div>
-            <div class="article about hidden">內容01</div>
             <div class="article news hidden">內容02</div>
             <div class="article product hidden">內容03</div>
             <div class="article contact hidden">內容04</div>
