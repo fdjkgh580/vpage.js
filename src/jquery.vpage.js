@@ -5,8 +5,6 @@
     // 提供 onload 辨識的鍵，預設 onload 
     var url_get_onload_key;
 
-
-
     $.vpage = {};
 
     // 倉儲存放
@@ -60,7 +58,6 @@
             if ($(usethis).get(0).tagName != "A") return false;
             var href = $(usethis).attr("href");
 
-
             $.vpage.set(name, "url", href);
             return href;
         }
@@ -88,7 +85,7 @@
 
                 //呼叫對應的 onload()
                 if ($.vpage.storage[vpage_name]) {
-                    $.vpage.storage[vpage_name].onload();
+                    $.vpage.storage[vpage_name].onload.call();
                 }
             }
 
@@ -181,8 +178,8 @@
      */
     $.vpage.listen = function(){
         $.vpage.is_listen = true;
-        $.vpage.api.onload();
-        $.vpage.api.onpop();
+        $.vpage.api.onload.call();
+        $.vpage.api.onpop.call();
     }
 
     /**
@@ -192,10 +189,10 @@
      */
     $.vpage.trigger = function (name, type){
         if (type == "onload"){
-            $.vpage.storage[name].onload();
+            $.vpage.storage[name].onload.call();
         }
         else if (type == "onpop") {
-            $.vpage.storage[name].onpop();
+            $.vpage.storage[name].onpop.call();
         }
     }
 
@@ -257,6 +254,7 @@
      */
     $.fn.vpage = function (param){
 
+        // 檢查並取得
         param = $.vpage.api.check_param(param);
 
         // 將設定放到倉儲，使用 vpage 的名稱作為鍵
@@ -266,15 +264,12 @@
         if (!history.state) {
             $.vpage.api.push_state(param);
         }
-        else {
-            if (!history.state[param.name]) {
-                $.vpage.api.push_state(param);
-            }
+        else if (!history.state[param.name]) {
+            $.vpage.api.push_state(param);
         }
 
         // 綁定使用者指派的事件
         this.on(param.event, function (){
-
 
             // 設定監聽了？
             if ($.vpage.api.is_set_listen() === false) return false;
@@ -286,11 +281,8 @@
             if (param.prepare) param.prepare.call(this, param);
 
             // 因為會被動態修改參數，所以要再次覆蓋
-            // console.log(history);
-
             $.vpage.api.push_state(param);
 
-            
 
             // 觸發動作
             if (param.do) return param.do.call(this, param);

@@ -129,11 +129,12 @@ body {
 .container .content .box {
   width: 50px;
   height: 50px;
-  background: #FACACA;
+  background: white;
   float: left;
   margin: 10px;
+  border-radius: 7px;
 }
-/* line 74, ../sass/frame.scss */
+/* line 75, ../sass/frame.scss */
 .container .content .box.selected {
-  background: #f16d6d;
+  background: #6b6b6b;
 }

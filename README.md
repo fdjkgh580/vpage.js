@@ -36,3 +36,5 @@ $(selector).vpage({
 ##
 1.1.0  
 修改重整頁面，重複覆蓋 history.state 的問題
+$.vpage.api.key 刪除
+添加 $.vpage.default(); 作為預設用途 
