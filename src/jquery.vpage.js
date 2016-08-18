@@ -95,7 +95,7 @@
             if (vpage_name) {
 
                 //呼叫對應的 onload()
-                if ($.vpage.storage[vpage_name] !== undefined) {
+                if ($.vpage.storage[vpage_name]) {
                     $.vpage.storage[vpage_name].onload();
                 }
             }
@@ -112,8 +112,7 @@
 
                 //如果有放入堆疊的話才執行
                 if (history.state){
-                    console.log(history.state)
-                    // var cky = $.vpage.get_url_param()
+                    // console.log(history.state)
                     var key = $.vpage.api.key(cky);
                     var obj = $.vpage.storage[key];
                     console.log(key)
@@ -137,9 +136,19 @@
             param.state = $.vpage.api.add_state(param);
             pushdata[param.name] = param.state;
 
-            history.pushState(pushdata, param.title, param.url);
-            
-            // console.log(pushdata);
+            // 合併
+            if (history.state) {
+                var newext = $.extend(history.state, pushdata);
+                // console.log(newext)
+                // alert("目前是 " + param.name + "需要與已存在的合併")
+            }
+            else {
+                var newext = pushdata;
+            }
+
+
+
+            history.pushState(newext, param.title, param.url);
         }
 
     }
@@ -193,7 +202,7 @@
      */
     $.vpage.set = function (name, key, val){
         var storage = $.vpage.storage[name];
-        if (storage === undefined) {
+        if (!storage) {
             console.log('找不到指定的 vpage = ' + name);
             return false;
         }
@@ -207,13 +216,13 @@
      */
     $.vpage.get = function (name, key){
 
-        if (name === undefined) return $.vpage.storage;
+        if (!name) return $.vpage.storage;
 
-        if (key === undefined) {
+        if (!key) {
 
             // 找不到 vpage
             var storage = $.vpage.storage[name];
-            if (storage === undefined) {
+            if (!storage) {
                 return false;
             }
 
@@ -245,10 +254,14 @@
         $.vpage.storage[param.name] = param;
 
         // 初次進入，就先將參數放置到 history.state 紀錄
-        if (history.state === null) {
+        if (!history.state) {
             $.vpage.api.push_state(param);
         }
-
+        else {
+            if (!history.state[param.name]) {
+                $.vpage.api.push_state(param);
+            }
+        }
 
         // 綁定使用者指派的事件
         this.on(param.event, function (){
@@ -264,6 +277,8 @@
             if (param.prepare) param.prepare.call(this, param);
 
             // 因為會被動態修改參數，所以要再次覆蓋
+            // console.log(history);
+
             $.vpage.api.push_state(param);
 
             
