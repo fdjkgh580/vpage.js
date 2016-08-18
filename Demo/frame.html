@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <title>Document</title>
+    <script src="jquery-3.1.0.min.js"></script>
+    <script src="../src/jquery.vpage.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/frame.css">
+<script>
+$(function (){
+
+    function _selected_item(selector){
+        $(".item").removeClass("selected");
+        $(selector).addClass('selected');
+    }
+    function _show_content(selector_target){
+        $(".content").find(".article").addClass("hidden");
+        $(".content").find(selector_target).removeClass("hidden");
+    }
+
+    function _init(){
+        $(".item").removeClass("selected");
+        $(".content").find(".article").addClass("hidden");
+        $(".content").find(".welcome").removeClass("hidden");
+    }
+
+
+    $(".item").vpage({
+        name: "frame",
+        event: "click",
+        prepare: function (){
+            var target = $(this).attr("data-target");
+            $.vpage.set("frame", "url", "?onload=frame&target=" + target)
+        },
+        do: function (){
+            var class_name = $(this).attr("data-target");
+
+            _selected_item(this);
+            _show_content("." + class_name);
+            return false;
+        },
+        onload: function (){
+            var target = $.vpage.get_url_param("target");
+
+            _selected_item(".item[data-target="+target+"]");
+            _show_content("." + target);
+        },
+        onpop: function (){
+            var target = $.vpage.get_url_param("target");
+            if (target === undefined) {
+                _init();
+            }
+            else {
+                _selected_item(".item[data-target="+target+"]");
+                _show_content("." + target);
+            }
+            
+        }
+    })
+
+
+    $.vpage.listen();
+
+    if ($.vpage.get_url_param("onload") === undefined) {
+        // init();
+        $(".content").find(".welcome").removeClass("hidden");
+    }
+
+})
+</script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a class="item" href="" data-target="about">項目01</a>
+            <a class="item" href="" data-target="news">項目02</a>
+            <a class="item" href="" data-target="product">項目03</a>
+            <a class="item" href="" data-target="contact">項目04</a>
+            <a class="item" href="" data-target="profile">項目05</a>
+        </header>
+        <div class="content">
+            <div class="article welcome hidden">歡迎使用 Vpage.js</div>
+            <div class="article about hidden">內容01</div>
+            <div class="article news hidden">內容02</div>
+            <div class="article product hidden">內容03</div>
+            <div class="article contact hidden">內容04</div>
+            <div class="article profile hidden">內容05</div>
+        </div>
+    </div>
+
+</body>
+</html>

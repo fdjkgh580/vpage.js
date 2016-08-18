@@ -42,7 +42,7 @@
 
                 url_get_onload_key = param.url_get_onload_key;
 
-                console.log(param)
+                // console.log(param)
 
             } catch (err){
                 console.log('Error: ' + err);
