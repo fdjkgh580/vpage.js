@@ -60,6 +60,7 @@ $(function (){
         },
         onload: function (){
             var target = $.vpage.get_url_param("target");
+            alert(target)
             tool.item(target);
         },
         onpop: function (){
@@ -67,6 +68,7 @@ $(function (){
             tool.item(target);
         },
     })
+    $.vpage.listen();
 
     $(".box").vpage({
         name: "box",
@@ -97,7 +99,7 @@ $(function (){
 
     $.vpage.listen();
 
-    if ( !$.vpage.get_url_param("onload") || !$.vpage.get_url_param("vp")) {
+    if ( !$.vpage.get_url_param("onload") && !$.vpage.get_url_param("vp")) {
         tool.init();
     }
 
