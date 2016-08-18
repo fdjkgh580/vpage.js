@@ -26,15 +26,11 @@ $(selector).vpage({
 })
 ````
 
-## 更多範例
-- [簡單](http://creation.kiiuo.com/vpage/Demo/simple.html)  
-- [建議](http://creation.kiiuo.com/vpage/Demo/standard.html)  
-
 ## 參考更多說明
 - [我的部落格](http://jsnwork.kiiuo.com/archives/2348/jquery-vpage-js-%E5%BF%AB%E9%80%9F%E5%88%87%E6%8F%9B%E7%B6%B2%E5%9D%80%E8%88%87%E5%B0%8D%E6%87%89%E4%BA%8B%E4%BB%B6)  
 
-##
-1.1.0  
+## 版本更新
+1.1.0
 修改重整頁面，重複覆蓋 history.state 的問題
 $.vpage.api.key 刪除
 添加 $.vpage.default(); 作為預設用途 
