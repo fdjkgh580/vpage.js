@@ -42,12 +42,12 @@ $(function (){
         },
         onload: function (){
             var target = $.vpage.get_url_param("target");
-
             _selected_item(".item[data-target="+target+"]");
             _show_content("." + target);
         },
         onpop: function (){
             var target = $.vpage.get_url_param("target");
+            
             if (target === undefined) {
                 _init();
             }
@@ -58,13 +58,46 @@ $(function (){
             
         }
     })
+    $.vpage.listen();
 
+
+    $(".box").vpage({
+        name: "box",
+        event: "click",
+        vs: this,
+        prepare: function (){
+            var id = $(this).attr("id");
+            $.vpage.set("box", "url", "?onload=box&id=" + id);
+        },
+        do: function (){
+            var id = $(this).attr("id");
+            $.vpage.get("box").selected(id);
+        },
+        onload: function (){
+            _init();
+
+            var id = $.vpage.get_url_param("id");
+            $.vpage.get("box").selected(id);
+        },
+        onpop: function (){
+            var id = $.vpage.get_url_param("id");
+            // alert(id)
+            $.vpage.get("box").selected(id);
+        },
+        selected: function (id){
+            $.vpage.get("box").reset();
+            $(".box[id="+id+"]").addClass("selected");
+        },
+        reset: function (){
+            $(".box").removeClass("selected");
+        }
+    })
 
     $.vpage.listen();
 
+
     if ($.vpage.get_url_param("onload") === undefined) {
-        // init();
-        $(".content").find(".welcome").removeClass("hidden");
+        _init();
     }
 
 })
@@ -81,7 +114,14 @@ $(function (){
             <a class="item" href="" data-target="profile">項目05</a>
         </header>
         <div class="content">
-            <div class="article welcome hidden">歡迎使用 Vpage.js</div>
+            <div class="article welcome hidden">
+                <div class="text">歡迎使用 Vpage.js</div>
+                <div class="box" id="1"></div>
+                <div class="box" id="2"></div>
+                <div class="box" id="3"></div>
+                <div class="box" id="4"></div>
+                <div class="box" id="5"></div>
+            </div>
             <div class="article about hidden">內容01</div>
             <div class="article news hidden">內容02</div>
             <div class="article product hidden">內容03</div>

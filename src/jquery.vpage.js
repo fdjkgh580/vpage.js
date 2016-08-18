@@ -1,9 +1,11 @@
 (function ( $ ) {
 
-    var version = "1.0.2";
+    var version = "1.1.0";
 
     // 提供 onload 辨識的鍵，預設 onload 
     var url_get_onload_key;
+
+
 
     $.vpage = {};
 
@@ -28,7 +30,9 @@
         this.check_param = function (param){
             try {
 
+                // 預設參數
                 param = $.extend({
+                    vs: this,
                     url_get_onload_key: 'onload'
                 }, param);
 
@@ -68,9 +72,13 @@
         }
 
         // 取得堆中的 vpage 名稱
-        this.key = function (){
-            return history.state.vpage_name;
+        this.key = function (key){
+            var val = history.state[key].vpage_name;
+            return val;
         }
+
+
+
 
         
 
@@ -101,16 +109,20 @@
         this.onpop = function (){
 
             window.onpopstate  = function (event){
+
                 //如果有放入堆疊的話才執行
-                if (history.state && history.state.vpage_name){
-                    var key = $.vpage.api.key();
+                if (history.state){
+                    console.log(history.state)
+                    // var cky = $.vpage.get_url_param()
+                    var key = $.vpage.api.key(cky);
                     var obj = $.vpage.storage[key];
+                    console.log(key)
                     obj.onpop.call();
 
                 }
                 else {
                     // 不應該進入這個判斷。
-                    console.log('System Error.');
+                    console.log('Default System');
                 }
                 
             }
@@ -119,8 +131,15 @@
 
         // 將參數放置到 history.state 紀錄
         this.push_state = function (param){
+            var vpn = param.name;
+            var pushdata = {};
+
             param.state = $.vpage.api.add_state(param);
-            history.pushState(param.state, param.title, param.url);
+            pushdata[param.name] = param.state;
+
+            history.pushState(pushdata, param.title, param.url);
+            
+            // console.log(pushdata);
         }
 
     }
@@ -220,17 +239,20 @@
      */
     $.fn.vpage = function (param){
 
-
         $.vpage.api.check_param(param);
 
         // 將設定放到倉儲，使用 vpage 的名稱作為鍵
         $.vpage.storage[param.name] = param;
 
         // 初次進入，就先將參數放置到 history.state 紀錄
-        $.vpage.api.push_state(param);
+        if (history.state === null) {
+            $.vpage.api.push_state(param);
+        }
+
 
         // 綁定使用者指派的事件
         this.on(param.event, function (){
+
 
             // 設定監聽了？
             if ($.vpage.api.is_set_listen() === false) return false;
@@ -243,6 +265,8 @@
 
             // 因為會被動態修改參數，所以要再次覆蓋
             $.vpage.api.push_state(param);
+
+            
 
             // 觸發動作
             if (param.do) return param.do.call(this, param);
