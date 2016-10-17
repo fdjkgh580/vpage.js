@@ -1,6 +1,6 @@
 (function ( $ ) {
 
-    var version = "1.1.0";
+    var version = "1.2.0";
 
     // 提供 onload 辨識的鍵，預設 onload 
     var url_get_onload_key;
@@ -246,8 +246,8 @@
      * @param  param.do(param)                 觸發時的動作
      * @param  param.onload                    畫面進入時所觸發的事件
      * @param  param.onpop                     切換上下頁面所觸發的事件
-     * @param  param.parent                    (選)on 的父元素
-     * @param  param.child                     (選)on 的子元素
+     * @param  param.parent                    (選)on 的父元素, param.parent 與 param.child 同時使用，等於取代選擇器使用
+     * @param  param.child                     (選)on 的子元素, param.parent 與 param.child 同時使用，等於取代選擇器使用
      * @param  param.state                     (選)history.pushState 物件     
      * @param  param.prepare(param)            (選)觸發事件前的準備動作
      * @param  param.title                     (選)變更的網頁標題
