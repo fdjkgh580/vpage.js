@@ -246,6 +246,8 @@
      * @param  param.do(param)                 觸發時的動作
      * @param  param.onload                    畫面進入時所觸發的事件
      * @param  param.onpop                     切換上下頁面所觸發的事件
+     * @param  param.parent                    (選)on 的父元素
+     * @param  param.child                     (選)on 的子元素
      * @param  param.state                     (選)history.pushState 物件     
      * @param  param.prepare(param)            (選)觸發事件前的準備動作
      * @param  param.title                     (選)變更的網頁標題
@@ -268,8 +270,13 @@
             $.vpage.api.push_state(param);
         }
 
+        var $parent = param.parent === undefined ? this : $(param.parent);
+        var child = param.child === undefined ? false : param.child;
+
+
+
         // 綁定使用者指派的事件
-        this.on(param.event, function (){
+        $parent.on(param.event, child, function (){
 
             // 設定監聽了？
             if ($.vpage.api.is_set_listen() === false) return false;
@@ -289,5 +296,18 @@
         })
 
     }
+
+    // $.fn.testee = function (parents, selector){
+
+    //     var _this = this;
+
+    //     // console.log(_this);
+
+    //     // 綁定使用者指派的事件
+    //     $(parents).on("click", selector, function (obj, e){
+    //         console.log($(this).html())
+    //         return false;
+    //     })
+    // }
 
 }( jQuery ));

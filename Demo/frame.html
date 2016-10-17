@@ -46,7 +46,9 @@ $(function (){
 
     }
 
-    $(".item").vpage({
+    $().vpage({
+        parent: "header",
+        child: ".item",
         name: "frame",
         event: "click",
         prepare: function (){
@@ -70,7 +72,9 @@ $(function (){
     $.vpage.listen();
     
 
-    $(".box").vpage({
+    $().vpage({
+        parent: ".content",
+        child: ".box",
         name: "box",
         event: "click",
         url_get_onload_key: "vp",
