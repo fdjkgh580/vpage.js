@@ -297,17 +297,5 @@
 
     }
 
-    // $.fn.testee = function (parents, selector){
-
-    //     var _this = this;
-
-    //     // console.log(_this);
-
-    //     // 綁定使用者指派的事件
-    //     $(parents).on("click", selector, function (obj, e){
-    //         console.log($(this).html())
-    //         return false;
-    //     })
-    // }
 
 }( jQuery ));
