@@ -1,6 +1,6 @@
 (function ( $ ) {
 
-    var version = "1.2.0";
+    var version = "1.2.1";
 
     // 提供 onload 辨識的鍵，預設 onload 
     var url_get_onload_key;
@@ -85,7 +85,8 @@
 
                 //呼叫對應的 onload()
                 if ($.vpage.storage[vpage_name]) {
-                    $.vpage.storage[vpage_name].onload.call();
+                    var st = $.vpage.storage[vpage_name];
+                    st.onload.call(st);
                 }
             }
 
@@ -116,7 +117,7 @@
 
                     if (key) {
                         var obj = $.vpage.storage[key];
-                        obj.onpop.call();
+                        obj.onpop.call(obj);
                     }
                     else {
                         $.vpage.default();
@@ -188,11 +189,12 @@
      * @param   type         onload | onpop
      */
     $.vpage.trigger = function (name, type){
+        var st = $.vpage.storage[name];
         if (type == "onload"){
-            $.vpage.storage[name].onload.call();
+            st.onload.call(st);
         }
         else if (type == "onpop") {
-            $.vpage.storage[name].onpop.call();
+            st.onpop.call(st);
         }
     }
 
