@@ -30,7 +30,7 @@ $(selector).vpage({
 - [我的部落格](http://jsnwork.kiiuo.com/archives/2348/jquery-vpage-js-%E5%BF%AB%E9%80%9F%E5%88%87%E6%8F%9B%E7%B6%B2%E5%9D%80%E8%88%87%E5%B0%8D%E6%87%89%E4%BA%8B%E4%BB%B6)  
 
 ## 版本更新
-1.2.2
+1.2.3
 解決當初次進入畫面後，歷史紀錄的上一頁會產生一個空白的問題
 
 1.2.1

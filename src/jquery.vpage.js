@@ -1,6 +1,6 @@
 (function ( $ ) {
 
-    var version = "1.2.2";
+    var version = "1.2.3";
 
     // 提供 onload 辨識的鍵，預設 onload 
     var url_get_onload_key;
