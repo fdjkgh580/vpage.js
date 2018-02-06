@@ -1,6 +1,6 @@
 (function ( $ ) {
 
-    var version = "1.2.1";
+    var version = "1.2.2";
 
     // 提供 onload 辨識的鍵，預設 onload 
     var url_get_onload_key;
@@ -134,7 +134,7 @@
         }
 
         // 將參數放置到 history.state 紀錄
-        this.push_state = function (param){
+        this.push_state = function (param, is_replace){
             var vpn = param.name;
             var pushdata = {};
 
@@ -151,7 +151,10 @@
                 var newext = pushdata;
             }
 
-            history.pushState(newext, param.title, param.url);
+            if (is_replace === true)
+                history.replaceState(newext, param.title, param.url);
+            else
+                history.pushState(newext, param.title, param.url);
         }
 
     }
@@ -237,7 +240,7 @@
         return $.vpage.storage[name][key];
     }
 
-    // 總體預設方法
+    // 總體預設方法，也就是當點選上一頁回到最初狀態時會觸發
     $.vpage.default = function (){}
 
 
@@ -264,18 +267,45 @@
         // 將設定放到倉儲，使用 vpage 的名稱作為鍵
         $.vpage.storage[param.name] = param;
 
-        // 初次進入，就先將參數放置到 history.state 紀錄
+        /**
+         * 注意！
+         * 因為 history.state 會連動，所以當順序是
+         * 
+         * console.log(history.state)
+         * history.state = ...
+         *
+         * 雖然檢測 console.log() 排序在修改 history.state 之前，但是當
+         * 使用瀏覽器的 Console 開啟時，console.log() 出來的 history.state 
+         * 其實已經被修改過了。
+         * 在 else if 的地方可以修改為以下片段來檢測：
+
+            else if (!history.state[param.name]) {
+                console.log("2: start", history.state) // 檢測時先打開
+                console.log("2: start", history.state) // 等 setTimeout 觸發後再打開，會發現 history.state 連動過了
+
+                setTimeout(function (){
+                    $.vpage.api.push_state(param, true);
+                    console.log("2: end", history.state)
+                }, 3000)
+            }
+         */
+        // 第一個 vpage 建立，就先將參數放置到 history.state 紀錄
         if (!history.state) {
-            $.vpage.api.push_state(param);
+            // console.log("1: start", history.state)
+            $.vpage.api.push_state(param, true);
+            // console.log("1: end", history.state)
         }
+        // 若有第二個 vpage 建立，就追加到 state
         else if (!history.state[param.name]) {
-            $.vpage.api.push_state(param);
+            // console.log("2: start", history.state) 
+            $.vpage.api.push_state(param, true);
+            // console.log("2: end", history.state)
         }
+
+
 
         var $parent = param.parent === undefined ? this : $(param.parent);
         var child = param.child === undefined ? false : param.child;
-
-
 
         // 綁定使用者指派的事件
         $parent.on(param.event, child, function (){

@@ -65,6 +65,11 @@ $(function (){
         }
     })
 
+    // 返回到初始畫面的樣式
+    $.vpage.default = function (){
+        $(".item").removeAttr("style");
+    }
+
 
     // 設置監聽
     $.vpage.listen();
