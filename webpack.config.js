@@ -7,7 +7,7 @@ module.exports = {
     watch: true,
  
     // development (開發模式未壓縮) | production (產品模式可壓縮)
-    mode: 'development',
+    mode: 'production',
     
     // 進入點，每個頁面使用一個 JS 檔
     entry: {

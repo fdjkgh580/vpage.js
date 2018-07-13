@@ -3,5 +3,6 @@
     $.vpage.existModel = function (modelName, callback){
         if ($.vpage.storage.models[modelName] === undefined) return false;
         callback.call(this);
+        return true;
     }
 }(jQuery));

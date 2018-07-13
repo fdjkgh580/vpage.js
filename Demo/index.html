@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="jquery-3.1.0.min.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
     <script src="../dist/jquery.vpage.min.js"></script>
-    <script src="watch.js"></script>
     <script>
-
         $(function (){
 
             $.vpage.init({
@@ -23,7 +21,7 @@
             })
 
             $(".Gallery").on("click", function (){
-                $.vpage.model("gallery", {
+                $.vpage.goto("gallery", {
                     title: 'JsnWork',
                     id: 789,
                     type: 999
@@ -31,7 +29,7 @@
             })
 
             $(".Article").on("click", function (){
-                $.vpage.model("article", {
+                $.vpage.goto("article", {
                     title: 'JsnWork',
                     id: 111,
                     type: 55555555
@@ -42,10 +40,12 @@
                 $.vpage.destroy();
             })
 
+            $(".Current").on("click", function (){
+                console.log($.vpage.storage.currentModelName)
+            })
+
         })
     </script>
-    
-
 </head>
 <body>
 
@@ -53,5 +53,8 @@
     <button class="Gallery">Gallery</button>
     <button class="Article">Article</button>
     <button class="Destroy">Destroy</button>
+    <div>
+        <button class="Current">Current</button>
+    </div>
 </body>
 </html>

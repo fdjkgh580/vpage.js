@@ -11,6 +11,7 @@
                 vpageParams: {}
             }
         }
+
         /**
          * 從網址找到 vpage 所指定的模型名稱，使之觸發回呼。
          * 如果找不到，則回呼 default
@@ -19,22 +20,28 @@
          */
         this.triggerModelFromQuery = function() {
             var allQueryObject = $.vpage.getUrlParams();
-            var modelName = (allQueryObject['vpage'] === undefined) ? "default" : allQueryObject['vpage'];
+            var modelName = $.vpage.modelName(allQueryObject);
+
             // modelName 是否存在
             $.vpage.existModel(modelName, function() {
-                $.vpage.storage.models[modelName].call(this, allQueryObject);
+                $.vpage.storage.currentModelName = modelName;
             });
         }
+
         // 瀏覽器上、下頁切換
         this.popstate = function() {
             window.onpopstate = function() {
                 var urlParams = $.vpage.getUrlParams();
-                //如果網址不存在 vpage 參數
+                //如果網址不存在 vpage 參數，那將使用 'default'
                 if (urlParams.vpage === undefined) {
                     $.vpage.storage.currentModelName = 'default';
                     return true;
                 }
-                $.vpage.storage.currentModelName = urlParams.vpage;
+
+                // 變更當前的模型名稱
+                $.vpage.setStorage({
+                    currentModelName: urlParams.vpage
+                })
             }
         }
     }
