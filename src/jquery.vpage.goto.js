@@ -2,7 +2,7 @@
     /**
      * 使用者要前往的模型
      * @param  {string} modelName  模型名稱
-     * @param  {object} customParams 使用者自訂夾帶的參數
+     * @param  {object} *customParams 使用者自訂夾帶的參數
      */
     $.vpage.goto = function(modelName, customParams) {
 

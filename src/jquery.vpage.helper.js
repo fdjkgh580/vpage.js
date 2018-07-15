@@ -24,7 +24,10 @@
 
             // modelName 是否存在
             $.vpage.existModel(modelName, function() {
-                $.vpage.storage.currentModelName = modelName;
+                // 變更當前的模型名稱
+                $.vpage.setStorage({
+                    currentModelName: modelName
+                })
             });
         }
 
