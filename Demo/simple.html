@@ -13,12 +13,15 @@
             $(function (){
 
                 $.vpage.router({
+                    // ex. https://localhost
                     default: function (){
                         console.log('Welcome')
                     },
+                    // https://localhost?vpage=book
                     book: function (obj){
                         console.log(obj.bid)
                     },
+                    // https://localhost?vpage=contact
                     contact: function (obj){
                         console.log(obj.email)
                     }

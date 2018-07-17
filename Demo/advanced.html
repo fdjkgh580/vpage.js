@@ -4,10 +4,7 @@
         <meta charset="utf-8">
         <title>Document</title>
         
-        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" rel="stylesheet">
         <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script crossorigin="anonymous" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-        <script crossorigin="anonymous" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
         <script src="../dist/jquery.vpage.min.js"></script>
         
         <script>
@@ -17,31 +14,19 @@
                     default: function (){
                         $(".output").empty()
                     },
-                    home: function (query){
-                        $(".output").html(query.say)
-                    },
                     profile: function (query){
                         $(".output").html("User ID：" + query.uid)
-                    },
-                    contact: function (query){
-                        $(".output").html(query.email)
                     }
                 })
 
 
-                $("body").on("click", "#home", function (){
-                    $.vpage.goto("home", {
-                        say: 'Hello World'
-                    })
-                })
+                
                 $("body").on("click", "#profile", function (){
+
+                    // Do something...
+
                     $.vpage.goto("profile", {
                         uid: 7899888015
-                    })
-                })
-                $("body").on("click", "#contact", function (){
-                    $.vpage.goto("contact", {
-                        email: "vpage@gmail.com"
                     })
                 })
                 
@@ -49,9 +34,7 @@
         </script>
     </head>
     <body>
-        <button id="home">home</button>
         <button id="profile">profile</button>
-        <button id="contact">contact</button>
         <div class="output"></div>
     </body>
 </html>
