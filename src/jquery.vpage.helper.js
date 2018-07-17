@@ -13,6 +13,16 @@
         }
 
         /**
+         * 轉換如 ?id=123 為 {id:123}
+         */
+        this.convertQueryStringToObject = function (str){
+            var search = str.substring(1);
+            var obj = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
+            return obj;
+        }
+
+
+        /**
          * 從網址找到 vpage 所指定的模型名稱，使之觸發回呼。
          * 如果找不到，則回呼 default
          * 

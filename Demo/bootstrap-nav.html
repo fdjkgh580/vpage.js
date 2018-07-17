@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <title>
+                Document
+            </title>
+            <!-- <script src="jquery-3.3.1.min.js"></script> -->
+            <!-- <script src="../dist/jquery.vpage.min.js"></script> -->
+            <!--     <script>
+        $(function (){
+
+            $.vpage.init({
+                default: function (){
+                    console.log('Hello vpage.js')
+                },
+                gallery: function (queryObject){
+                    console.log('Hello Gallery, ID:' + queryObject.id)
+                }, 
+                article: function (queryObject){
+                    console.log('Hello Article, Type:' + queryObject.type)
+                }
+            })
+
+            $(".Gallery").on("click", function (){
+                $.vpage.goto("gallery", {
+                    title: 'JsnWork',
+                    id: 789,
+                    type: 999
+                })
+            })
+
+            $(".Article").on("click", function (){
+                $.vpage.goto("article", {
+                    title: 'JsnWork',
+                    id: 111,
+                    type: 55555555
+                })
+            })
+
+            $(".Destroy").on("click", function (){
+                $.vpage.destroy();
+            })
+
+            $(".Current").on("click", function (){
+                console.log($.vpage.storage.currentModelName)
+            })
+
+        })
+    </script> -->
+            <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" rel="stylesheet">
+                <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+                </script>
+                <script crossorigin="anonymous" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js">
+                </script>
+                <script crossorigin="anonymous" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js">
+                </script>
+                <script src="../dist/jquery.vpage.min.js">
+                </script>
+                <script>
+                    $(function (){
+                        
+                        var Navbar = new function (){
+                            var $root = $("#myTab");
+                            this.setActive = function (controls){
+                                $root.find('[aria-controls='+controls+']').tab('show')
+                            }
+                        }
+
+
+                        $.vpage.init({
+                            // default: function (queryObject){
+                            //     Navbar.setActive('home')
+                            // },
+                            home: function (queryObject){
+                                Navbar.setActive('home')
+                            },
+                            profile: function (){
+                                Navbar.setActive('profile')
+                            },
+                            contact: function (){
+                                Navbar.setActive('contact')
+                            }
+                        })
+
+                        $('#myTab a').on('click', function (e) {
+                            var controls = $(this).attr("aria-controls");
+                            $.vpage.goto(controls)
+                            return false;
+                        })
+                    })
+                </script>
+            </link>
+        </meta>
+    </head>
+    <body>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a aria-controls="home" aria-selected="true" class="nav-link" data-toggle="tab" href="#home" id="home-tab" role="tab">
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a aria-controls="profile" aria-selected="false" class="nav-link" data-toggle="tab" href="#profile" id="profile-tab" role="tab">
+                    Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a aria-controls="contact" aria-selected="false" class="nav-link" data-toggle="tab" href="#contact" id="contact-tab" role="tab">
+                    Contact
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div aria-labelledby="home-tab" class="tab-pane fade" id="home" role="tabpanel">
+                1
+            </div>
+            <div aria-labelledby="profile-tab" class="tab-pane fade" id="profile" role="tabpanel">
+                2
+            </div>
+            <div aria-labelledby="contact-tab" class="tab-pane fade" id="contact" role="tabpanel">
+                3
+            </div>
+        </div>
+    </body>
+</html>

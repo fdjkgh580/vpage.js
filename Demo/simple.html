@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>
+            Document
+        </title>
+        
+        <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="../dist/jquery.vpage.min.js">
+        </script>
+        <script>
+            $(function (){
+
+                $.vpage.router({
+                    default: function (){
+                        console.log('Welcome')
+                    },
+                    book: function (obj){
+                        console.log(obj.bid)
+                    },
+                    contact: function (obj){
+                        console.log(obj.email)
+                    }
+                })
+
+            })
+        </script>
+    </head>
+    <body>
+        <a data-vpage="book" href="?bid=123">Book</a>
+        <button data-vpage="contact" data-href="?email=fdjkgh580@gmail.com">Contact</button>
+    </body>
+</html>
