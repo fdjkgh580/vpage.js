@@ -15,8 +15,15 @@
                 var href = $(this).attr("data-href");
             }
 
-            var customObject = $.vpage.helper.convertQueryStringToObject(href);
-            $.vpage.goto(modelName, customObject);
+            var box = href.split("?");
+            var path = box[0];
+            var queryString = box[1]
+
+            var customObject = queryString === undefined 
+                ? {}
+                : $.vpage.helper.convertQueryStringToObject("?" + queryString);
+
+            $.vpage.goto(modelName, customObject, path);
             
         })
 

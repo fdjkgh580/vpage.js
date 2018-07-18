@@ -10,27 +10,30 @@
         <script src="../dist/jquery.vpage.min.js">
         </script>
         <script>
-            $(function (){
 
-                $.vpage.router({
-                    // ex. https://localhost
-                    default: function (){
-                        console.log('Welcome')
-                    },
-                    // https://localhost?vpage=book
-                    book: function (obj){
-                        console.log(obj.bid)
-                    },
-                    // https://localhost?vpage=contact
-                    contact: function (obj){
-                        console.log(obj.email)
-                    }
-                })
-
+            $.vpage.router({
+                // ex. https://localhost
+                default: function (){
+                    console.log('Welcome')
+                },
+                // https://localhost?vpage=book
+                me: function (){
+                    console.log('me')
+                },
+                // https://localhost?vpage=book
+                book: function (obj){
+                    console.log("Bid: " + obj.bid)
+                },
+                // https://localhost?vpage=contact
+                contact: function (obj){
+                    console.log("E-mail: " + obj.email)
+                }
             })
+
         </script>
     </head>
     <body>
+        <a data-vpage="me" href="">Me</a>
         <a data-vpage="book" href="?bid=123">Book</a>
         <button data-vpage="contact" data-href="?email=fdjkgh580@gmail.com">Contact</button>
     </body>

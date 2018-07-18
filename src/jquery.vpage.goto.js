@@ -3,8 +3,9 @@
      * 使用者要前往的模型
      * @param  {string} modelName  模型名稱
      * @param  {object} *customParams 使用者自訂夾帶的參數
+     * @param  {string} *path 路徑
      */
-    $.vpage.goto = function(modelName, customParams) {
+    $.vpage.goto = function(modelName, customParams, path) {
 
         if ($.vpage.isInit === false) return false;
 
@@ -20,7 +21,7 @@
             // 添加到歷史紀錄
             $.vpage.historyPush({
                 storage: vpageParams,
-                url: '?' + queryString,
+                url: path + '?' + queryString,
                 title: vpageParams.title
             })
 
