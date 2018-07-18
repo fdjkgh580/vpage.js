@@ -1,42 +1,48 @@
 # vpage.js 
-- vpage 是一個 jQuery 的 plugin 掛件
-- 透過簡單的寫法，設計出與網址對應的動態事件
-- 能讓瀏覽器的上下頁切換 (window.onpopstate)、重新整理頁面後 (偽 history.state) 觸發指定的事件
-- vpage 不包含 AJAX 處理
 
-## 範例
+## 簡單範例
+
+````html 
+<button id="home">home</button>
+<button id="profile">profile</button>
+<button id="contact">contact</button>
+<div class="output"></div>
+````
+當網址未出現 ?vpage 的時候，將會觸發 default()；若有的話，例如 ?vpage=profile 那麼就會觸發對應的 profile() 方法。如同我們熟悉的路由概念，辨識取決於網址的 vpage 參數。
+
+無論瀏覽器上一頁、下一頁切換，或是經由網址載入，都將執行對應的呼叫。
 ````javascript
-$(selector).vpage({
-    name: 'my_button', // 該模型的唯一名稱
-    event: 'click', // 綁定的事件，參考 jQuery 的 .on() 方法
-    url_get_onload_key: 'call_vpage_name', // 提供網址一個觸發 vpage 的 GET 參數鍵如 ?call_vpage_name=my_button
-    prepare: function (param){
-        // 事件觸發前的動作
+$.vpage.init({
+    default: function (){
+        $(".output").empty()
     },
-    do: function (param){
-        // 事件觸發
+    home: function (query){
+        $(".output").html(query.say)
     },
-    onload: function (){
-        // 畫面進入後要觸發的事件
-        // 例如偵測到網址 ?call_vpage_name=my_button 會觸發
+    profile: function (query){
+        $(".output").html("User ID：" + query.uid)
     },
-    onpop: function (){
-        // 上下頁切換觸發的事件
+    contact: function (query){
+        $(".output").html(query.email)
     }
 })
 ````
 
-## 參考更多說明
-- [我的部落格](http://jsnwork.kiiuo.com/archives/2348/jquery-vpage-js-%E5%BF%AB%E9%80%9F%E5%88%87%E6%8F%9B%E7%B6%B2%E5%9D%80%E8%88%87%E5%B0%8D%E6%87%89%E4%BA%8B%E4%BB%B6)  
-
-## 版本更新
-1.2.3
-解決當初次進入畫面後，歷史紀錄的上一頁會產生一個空白的問題
-
-1.2.1
-onload(), onpop() 可以透過 this 取得當前的 vpage storage.
-
-1.1.0
-修改重整頁面，重複覆蓋 history.state 的問題
-$.vpage.api.key 刪除
-添加 $.vpage.default(); 作為預設用途 
+### $.vpage.goto('指定網址參數 vpage 名稱', 夾帶給網址的自訂參數)
+````javascript  
+$("body").on("click", "#home", function (){
+    $.vpage.goto("home", {
+        say: 'Hello World'
+    })
+})
+$("body").on("click", "#profile", function (){
+    $.vpage.goto("profile", {
+        uid: 7899888015
+    })
+})
+$("body").on("click", "#contact", function (){
+    $.vpage.goto("contact", {
+        email: "vpage@gmail.com"
+    })
+})
+````
