@@ -6,7 +6,7 @@ const callWatchers = WatchJS.callWatchers;
 
 (function($) {
     $.vpage.destroy = function() {
-        unwatch($.vpage.storage, "currentModelName");
+        unwatch($.vpage.storage, "currentHistoryModelName");
         $.vpage.helper.initStorage();
         $.vpage.isInit = false;
         return true;

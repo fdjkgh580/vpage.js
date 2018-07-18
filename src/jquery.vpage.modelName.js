@@ -8,7 +8,7 @@
         
         // 尋找
         return (allQueryObject['vpage'] === undefined) 
-            ? "default" 
+            ? null 
             : allQueryObject['vpage'];
     }
 }(jQuery));

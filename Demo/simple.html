@@ -14,7 +14,10 @@
             $.vpage.router({
                 // ex. https://localhost
                 default: function (){
-                    console.log('Welcome')
+                    console.log('default!!')
+                },
+                noneHash: function (){
+                    console.log('noneHash!!')
                 },
                 // https://localhost?vpage=book
                 me: function (){
@@ -22,13 +25,21 @@
                 },
                 // https://localhost?vpage=book
                 book: function (obj){
-                    console.log("Bid: " + obj.bid)
+                    console.log("(History) Bid: " + obj.bid)
                 },
                 // https://localhost?vpage=contact
                 contact: function (obj){
-                    console.log("E-mail: " + obj.email)
+                    console.log("(History) E-mail: " + obj.email)
+                },
+                'user/:gogolo': function (obj){
+                    console.log('(Hash) User', obj)
+                },
+                'products/:pid': function (pid){
+
                 }
             })
+
+
 
         </script>
     </head>
@@ -36,5 +47,10 @@
         <a data-vpage="me" href="">Me</a>
         <a data-vpage="book" href="?bid=123">Book</a>
         <button data-vpage="contact" data-href="?email=fdjkgh580@gmail.com">Contact</button>
+
+        <div>
+            <a href="#user/123">#user/123</a>
+            <a href="#user/456">#user/456</a>
+        </div>
     </body>
 </html>

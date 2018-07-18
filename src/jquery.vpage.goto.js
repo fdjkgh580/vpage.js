@@ -13,22 +13,22 @@
         var isExist = $.vpage.existModel(modelName, function (){
 
             // 混合模型所需要的參數
-            var vpageParams = $.vpage.getMixParams(modelName, customParams);
+            var currentHistoryVpageParams = $.vpage.getMixParams(modelName, customParams);
 
             // 轉換成網址的參數
-            var queryString = $.param(vpageParams);
+            var queryString = $.param(currentHistoryVpageParams);
 
             // 添加到歷史紀錄
             $.vpage.historyPush({
-                storage: vpageParams,
+                storage: currentHistoryVpageParams,
                 url: path + '?' + queryString,
-                title: vpageParams.title
+                title: currentHistoryVpageParams.title
             })
 
             // 改變當前倉儲設定
             $.vpage.setStorage({
-                currentModelName: modelName,
-                vpageParams: vpageParams
+                currentHistoryModelName: modelName,
+                currentHistoryVpageParams: currentHistoryVpageParams
             })
 
         })

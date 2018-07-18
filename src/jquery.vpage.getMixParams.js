@@ -5,10 +5,10 @@
      * @param   customParams 使用者自訂參數
      */
     $.vpage.getMixParams = function(modelName, customParams) {
-        var vpageParams = {
+        var currentHistoryVpageParams = {
             vpage: modelName,
         }
-        $.extend(true, vpageParams, customParams);
-        return vpageParams;
+        $.extend(true, currentHistoryVpageParams, customParams);
+        return currentHistoryVpageParams;
     }
 }(jQuery));
