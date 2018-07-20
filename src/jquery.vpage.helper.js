@@ -89,10 +89,10 @@
 
                 rBoxMatch = _matchRouterHash(modelName, splitBox, locationHashBox)
 
-                // 如果不是匹配的模型名稱
-                if (rBoxMatch.matchModelName === false) return false;
+                // 如果不是匹配的模型名稱，繼續下一個
+                if (rBoxMatch.matchModelName === false) return true;
 
-
+                // 找到了
                 return false;
             })
 
@@ -108,7 +108,7 @@
 
         // 開始比對如 user/uid => user/123
         var _matchRouterHash = function (modelName, modelNameBox, locationHashBox){
-            // console.log(modelNameBox, locationHashBox)
+            // console.log(modelName, modelNameBox, locationHashBox)
             var matchModelName = false;
             var matchParams = {};
 
@@ -120,11 +120,11 @@
                 // 這個 key 是如 :var 參數嗎
                 if (seg.indexOf(":") < 0) return false; // 代表也不是這個路由...
                 // 代表變數就是這個值，例如 id = 123
-                var paramName = seg.slice(1);
+                var paramName = seg.slice(1); // 去除 :
                 matchParams[paramName] = locationHashBox[key];
                 matchModelName = modelName;
 
-                return false;
+                return true;
             })
 
             return {

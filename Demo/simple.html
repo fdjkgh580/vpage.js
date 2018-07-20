@@ -37,8 +37,11 @@
                     console.log('(Hash) User', obj)
                 },
                 // https://......#user/123456
-                'products/:pid': function (pid){
+                'products/:type/:pid': function (obj){
                     console.log('(Hash) product', obj)
+                },
+                'exhibition/:eid': function (obj){
+                    console.log('(Hash) exhibition', obj)
                 }
             })
 
@@ -54,7 +57,7 @@
         <div>
             <a href="#user/123">#user/123</a>
             <a href="#user/456">#user/456</a>
-            <a href="#products/P007">#products/456</a>
+            <a href="#products/seafood/P007">#products/seafood/P007</a>
         </div>
     </body>
 </html>
