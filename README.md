@@ -1,86 +1,50 @@
 # vpage.js 
 
-## 簡單範例
-
-````html 
-<!-- History -->
-<div>
-    <a data-vpage="me" href="">Me</a>
-    <a data-vpage="book" href="?bid=123">Book</a>
-    <button data-vpage="contact" data-href="?email=fdjkgh580@gmail.com">Contact</button>
-</div>
-
-<!-- Hash -->
-<div>
-    <a href="#user/123">#user/123</a>
-    <a href="#user/456">#user/456</a>
-    <a href="#products/seafood/P007">#products/seafood/P007</a>
-</div>
+## History 使用的方式
+利用 Query String 作為判斷
+### 當使用 ````<a>````
+````html
+<a data-vpage="book" href="?bid=123">Book</a>
 ````
-當網址未出現 ?vpage 的時候，將會觸發 default()；若有的話，例如 ?vpage=profile 那麼就會觸發對應的 profile() 方法。如同我們熟悉的路由概念，辨識取決於網址的 vpage 參數。
-
-無論瀏覽器上一頁、下一頁切換，或是經由網址載入，都將執行對應的呼叫。
 ````javascript
 $.vpage.router({
     // ex. https://localhost
     default: function (){
         console.log('default!!')
     },
-    // ex. https://localhost
+    // https://localhost?vpage=book&bid=123
+    book: function (obj){
+        console.log("Bid: " + obj.bid)
+    },
+})
+````
+### 當使用 ````<button>```` 或其他元素
+
+````html
+<button data-vpage="contact" data-href="?email=fdjkgh580@gmail.com">Contact</button>
+````
+````javascript
+$.vpage.router({
+    //...
+    contact: function (obj){
+        console.log("E-mail: " + obj.email)
+    },
+})
+````
+
+## Hash 的使用方式
+````html
+<a href="#products/seafood/P007">#products/seafood/P007</a>
+````
+````javascript
+$.vpage.router({
+    // https://......
     noneHash: function (){
         console.log('noneHash!!')
     },
-    // https://localhost?vpage=me
-    me: function (){
-        console.log('me')
-    },
-    // https://localhost?vpage=book
-    book: function (obj){
-        console.log("(History) Bid: " + obj.bid)
-    },
-    // https://localhost?vpage=contact
-    contact: function (obj){
-        console.log("(History) E-mail: " + obj.email)
-    },
-    // https://......#user/123456
-    'user/:gogolo': function (obj){
-        console.log('(Hash) User', obj)
-    },
-    // https://......#user/123456
+    // https://......#products/seafood/P007
     'products/:type/:pid': function (obj){
-        console.log('(Hash) product', obj)
-    },
-    'exhibition/:eid': function (obj){
-        console.log('(Hash) exhibition', obj)
-    }
-})
-````
-
-
-## 進階範例
-以下暫時未修改....等我
-````html
-<button id="profile">profile</button>
-<div class="output"></div>
-````
-
-````javascript
-$.vpage.router({
-    default: function (){
-        $(".output").empty()
-    },
-    profile: function (query){
-        $(".output").html("User ID：" + query.uid)
-    }
-})
-
-
-$("body").on("click", "#profile", function (){
-
-    // Do something...
-
-    $.vpage.goto("profile", {
-        uid: 7899888015
-    })
+        console.log('product', obj)
+    }    
 })
 ````
