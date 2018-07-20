@@ -16,10 +16,11 @@
                 default: function (){
                     console.log('default!!')
                 },
+                // ex. https://localhost
                 noneHash: function (){
                     console.log('noneHash!!')
                 },
-                // https://localhost?vpage=book
+                // https://localhost?vpage=me
                 me: function (){
                     console.log('me')
                 },
@@ -31,11 +32,13 @@
                 contact: function (obj){
                     console.log("(History) E-mail: " + obj.email)
                 },
+                // https://......#user/123456
                 'user/:gogolo': function (obj){
                     console.log('(Hash) User', obj)
                 },
+                // https://......#user/123456
                 'products/:pid': function (pid){
-
+                    console.log('(Hash) product', obj)
                 }
             })
 
@@ -51,6 +54,7 @@
         <div>
             <a href="#user/123">#user/123</a>
             <a href="#user/456">#user/456</a>
+            <a href="#products/P007">#products/456</a>
         </div>
     </body>
 </html>
