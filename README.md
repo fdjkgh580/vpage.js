@@ -3,9 +3,19 @@
 ## 簡單範例
 
 ````html 
-<a data-vpage="me" href="">Me</a>
-<a data-vpage="book" href="?bid=123">Book</a>
-<button data-vpage="contact" data-href="?email=fdjkgh580@gmail.com">Contact</button>
+<!-- History -->
+<div>
+    <a data-vpage="me" href="">Me</a>
+    <a data-vpage="book" href="?bid=123">Book</a>
+    <button data-vpage="contact" data-href="?email=fdjkgh580@gmail.com">Contact</button>
+</div>
+
+<!-- Hash -->
+<div>
+    <a href="#user/123">#user/123</a>
+    <a href="#user/456">#user/456</a>
+    <a href="#products/seafood/P007">#products/seafood/P007</a>
+</div>
 ````
 當網址未出現 ?vpage 的時候，將會觸發 default()；若有的話，例如 ?vpage=profile 那麼就會觸發對應的 profile() 方法。如同我們熟悉的路由概念，辨識取決於網址的 vpage 參數。
 
@@ -14,25 +24,41 @@
 $.vpage.router({
     // ex. https://localhost
     default: function (){
-        console.log('Welcome')
+        console.log('default!!')
     },
-    // https://localhost?vpage=book
+    // ex. https://localhost
+    noneHash: function (){
+        console.log('noneHash!!')
+    },
+    // https://localhost?vpage=me
     me: function (){
         console.log('me')
     },
     // https://localhost?vpage=book
     book: function (obj){
-        console.log("Bid: " + obj.bid)
+        console.log("(History) Bid: " + obj.bid)
     },
     // https://localhost?vpage=contact
     contact: function (obj){
-        console.log("E-mail: " + obj.email)
+        console.log("(History) E-mail: " + obj.email)
+    },
+    // https://......#user/123456
+    'user/:gogolo': function (obj){
+        console.log('(Hash) User', obj)
+    },
+    // https://......#user/123456
+    'products/:type/:pid': function (obj){
+        console.log('(Hash) product', obj)
+    },
+    'exhibition/:eid': function (obj){
+        console.log('(Hash) exhibition', obj)
     }
 })
 ````
 
 
 ## 進階範例
+以下暫時未修改....等我
 ````html
 <button id="profile">profile</button>
 <div class="output"></div>
