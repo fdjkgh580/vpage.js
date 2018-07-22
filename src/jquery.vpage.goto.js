@@ -9,6 +9,8 @@
 
         if ($.vpage.isInit === false) return false;
 
+        if (path === undefined) path = "";
+
         // 模型名稱是否已經存在？
         var isExist = $.vpage.existModel(modelName, function (){
 

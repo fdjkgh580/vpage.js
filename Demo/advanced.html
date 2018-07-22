@@ -14,8 +14,14 @@
                     default: function (){
                         $(".output").empty()
                     },
+                    noneHash: function (){
+                        $(".output").empty()
+                    },
                     profile: function (query){
-                        $(".output").html("User ID：" + query.uid)
+                        $(".output").html("uid: " + query.uid)
+                    },
+                    'contact/:email/:phone': function (obj){
+                        $(".output").html("uid: " + obj.email + ", phone:" + obj.phone)
                     }
                 })
 
@@ -29,12 +35,25 @@
                         uid: 7899888015
                     })
                 })
+
+                $("body").on("click", "#contact", function (){
+
+                    // Do something...
+
+                    location.href = "#contact/fdjkgh580@gmail.com/0988888888"
+                })
                 
             })
         </script>
     </head>
     <body>
-        <button id="profile">profile</button>
         <div class="output"></div>
+        
+        <h1>History</h1>
+        <button id="back" onclick="history.back()">Back</button>
+        <button id="profile">Profile</button>
+        <h1>Hash</h1>
+        <button id="back" onclick="history.back()">Back</button>
+        <button id="contact">Contact</button>
     </body>
 </html>

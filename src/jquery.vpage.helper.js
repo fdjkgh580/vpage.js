@@ -28,26 +28,20 @@
 
         /**
          * 從網址找到 vpage 所指定的模型名稱，使之觸發回呼。
-         * 如果找不到，則忽略
+         * 如果找不到，則預設
          * 
          * @callback(allQueryObject)
          */
         this.loadHistoryFromQuery = function() {
             var allQueryObject = $.vpage.getUrlParams();
             var modelName = $.vpage.modelName(allQueryObject);
-
+            // console.log("--->", modelName, window.location.hash)
             if (modelName === null) {
-                
 
-                // 網址不存在 vpage 參數也不存在 Hash，那將預設
-                if (window.location.hash === "") {
-
-                    $.vpage.setStorage({
-                        currentHistoryModelName: 'default',
-                        currentHistoryVpageParams: {}
-                    })
-
-                }
+                $.vpage.setStorage({
+                    currentHistoryModelName: 'default',
+                    currentHistoryVpageParams: {}
+                })
 
                 return false;
             }
@@ -150,8 +144,6 @@
         this.popstate = function() {
             var _this = this;
             window.onpopstate = function() {
-
-                
 
                 _this.loadHistoryFromQuery();
 

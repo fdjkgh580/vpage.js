@@ -1,5 +1,11 @@
 (function($) {
 
+    /**
+     * 當 history 沒有任何 ?vpage 那麼將會預設觸發 'default'
+     * 若當 Hash 從有到無，將會觸發 'noneHash'
+     * 
+     */
+
     $.vpage.router = function(rules) {
 
         $.vpage.isInit = true;
