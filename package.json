@@ -2,7 +2,7 @@
   "name": "vpage.js",
   "version": "2.1.0",
   "description": "使用 jQuery 簡單的製作 SPA",
-  "main": "index.js",
+  "main": "dist/jquery.vpage.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
