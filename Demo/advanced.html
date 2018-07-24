@@ -20,7 +20,7 @@
                     profile: function (query){
                         $(".output").html("uid: " + query.uid)
                     },
-                    'contact/:email/:phone': function (obj){
+                    '#contact/:email/:phone': function (obj){
                         $(".output").html("uid: " + obj.email + ", phone:" + obj.phone)
                     }
                 })
@@ -33,7 +33,7 @@
 
                     $.vpage.goto("profile", {
                         uid: 7899888015
-                    })
+                    }, 789)
                 })
 
                 $("body").on("click", "#contact", function (){

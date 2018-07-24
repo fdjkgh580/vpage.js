@@ -12,31 +12,30 @@
         <script>
 
             $.vpage.router({
-                default: function (obj, triggerType){
-                    console.log('default', obj, triggerType)
+                default: function (params, triggerType){
+                    console.log('default', params, triggerType)
                 },
-                noneHash: function (obj, triggerType){
-                    console.log('noneHash', obj, triggerType)
+                noneHash: function (params, triggerType){
+                    console.log('noneHash', params, triggerType)
                 },
-                me: function (obj, triggerType){
-                    console.log(obj, triggerType)
+                me: function (params, triggerType){
+                    console.log(params, triggerType)
                 },
-                book: function (obj, triggerType){
-                    console.log(obj, triggerType)
+                book: function (params, triggerType){
+                    console.log(params, triggerType)
                 },
-                contact: function (obj, triggerType){
-                    console.log(obj, triggerType)
+                contact: function (params, triggerType){
+                    console.log(params, triggerType)
                 },
-                '#user/:gogolo': function (obj, triggerType){
-                    console.log(obj, triggerType)
+                '#user/:uid': function (params, triggerType){
+                    console.log(params, triggerType)
                 },
-                '#product/detail/:type/:pid': function (obj, triggerType){
-                    console.log(obj, triggerType)
+                '#product/detail/:type/:pid': function (params, triggerType){
+                    console.log(params, triggerType)
                 },
-                '#exhibition/:eid': function (obj, triggerType){
-                    console.log(obj, triggerType)
+                '#exhibition/:eid': function (params, triggerType){
+                    console.log(params, triggerType)
                 }
-                
             })
 
 
