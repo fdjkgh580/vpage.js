@@ -2,7 +2,7 @@
 有兩種方式，一種是 History 另外一種是 Hash 形式。
 
 ## 1. History 使用的方式
-利用網址的 Query String 作為判斷
+網址參數(GET)的鍵出現了 vpage，例如 ?vpage=book 那麼將會啟用路由偵測。
 ### 當使用 ````<a>````
 ````html
 <a data-vpage="book" href="?bid=123">Book</a>
