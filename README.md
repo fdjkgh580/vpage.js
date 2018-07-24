@@ -8,14 +8,9 @@
 ````
 ````javascript
 $.vpage.router({
-    // ex. https://localhost
-    default: function (){
-        console.log('default!!')
-    },
-    // https://localhost?vpage=book&bid=123
-    book: function (obj){
-        console.log("Bid: " + obj.bid)
-    },
+    book: function (obj, triggerType){
+        console.log(obj, triggerType)
+    }
 })
 ````
 ### 當使用 ````<button>```` 或其他元素
@@ -25,26 +20,20 @@ $.vpage.router({
 ````
 ````javascript
 $.vpage.router({
-    //...
-    contact: function (obj){
-        console.log("E-mail: " + obj.email)
-    },
+    contact: function (obj, triggerType){
+        console.log(obj, triggerType)
+    }
 })
 ````
 
 ## Hash 的使用方式
 ````html
-<a href="#products/seafood/P007">#products/seafood/P007</a>
+<a href="#product/detail/seafood/P007">#product/detail/seafood/P007</a>
 ````
 ````javascript
 $.vpage.router({
-    // https://......
-    noneHash: function (){
-        console.log('noneHash!!')
-    },
-    // https://......#products/seafood/P007
-    'products/:type/:pid': function (obj){
-        console.log('product', obj)
-    }    
+    '#product/detail/:type/:pid': function (obj, triggerType){
+        console.log(obj, triggerType)
+    }
 })
 ````
