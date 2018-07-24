@@ -1,8 +1,8 @@
 # vpage.js 2
 利用 jQuery 製作路由。有兩種方式可以觸發事件，一種是 History 另外一種是 Hash。
 
-## 1. History 使用的方式
-網址參數(GET)的鍵出現了 vpage，例如 ?vpage=book 那麼將會啟用路由偵測。
+# 1. History 使用的方式
+網址參數(GET)的鍵出現了 vpage，例如 ?vpage=book 那麼將會啟用路由偵測。網址的任何 Query String 都會傳遞到路由模型。
 ### 當使用 ````<a>````
 ````html
 <a data-vpage="book" href="?bid=123">Book</a>
@@ -30,7 +30,9 @@ $.vpage.router({
 [前往試試看](https://codepen.io/fdjkgh580/pen/NBjaaL)
 
 
-## 2. Hash 的使用方式
+# 2. Hash 的使用方式
+透過網址 # 的方式，例如路由指定 #product 會把後續出現以 : 開頭的命名如 :pid，作為參數名稱並傳遞到路由模型。
+
 ````html
 <a href="#product/detail/seafood/P007">#product/detail/seafood/P007</a>
 ````
@@ -43,7 +45,7 @@ $.vpage.router({
 ````
 [前往試試看](https://codepen.io/fdjkgh580/pen/GBmMOO)
 
-## API
+# 3. API
 ### $.vpage.goto(modelName, params, {path})
 手動指定 History 的路由與夾帶的參數。
 ````javascript
@@ -60,7 +62,7 @@ location.href = "#contact/fdjkgh580@gmail.com/0988888888"
 ````
 [前往試試看](https://codepen.io/fdjkgh580/pen/xJdXmR)
 
-## 事件
+# 4. 事件
 ### default()
 當網址不符合任何路由的時候所觸發。
 ````javascript
@@ -73,6 +75,7 @@ $.vpage.router({
     }
 })
 ````
+
 ### noneHash()
 當網址的路由從沒有 hash 轉換到沒有 hash 的時候所觸發。
 ````javascript
