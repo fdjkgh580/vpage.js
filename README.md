@@ -1,4 +1,4 @@
-# vpage.js 
+# vpage.js 2
 有兩種方式，一種是 History 另外一種是 Hash 形式。
 
 ## 1. History 使用的方式
