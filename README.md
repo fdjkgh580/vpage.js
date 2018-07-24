@@ -18,8 +18,8 @@ import 'vpage.js'
 ````
 ````javascript
 $.vpage.router({
-    book: function (obj, triggerType){
-        console.log(obj, triggerType)
+    book: function (params, triggerType){
+        console.log(params, triggerType)
     }
 })
 ````
@@ -31,8 +31,8 @@ $.vpage.router({
 ````
 ````javascript
 $.vpage.router({
-    contact: function (obj, triggerType){
-        console.log(obj, triggerType)
+    contact: function (params, triggerType){
+        console.log(params, triggerType)
     }
 })
 ````
@@ -47,8 +47,8 @@ $.vpage.router({
 ````
 ````javascript
 $.vpage.router({
-    '#product/detail/:type/:pid': function (obj, triggerType){
-        console.log(obj, triggerType)
+    '#product/detail/:type/:pid': function (params, triggerType){
+        console.log(params, triggerType)
     }
 })
 ````
@@ -76,10 +76,10 @@ location.href = "#contact/fdjkgh580@gmail.com/0988888888"
 當網址不符合任何路由的時候所觸發。
 ````javascript
 $.vpage.router({
-    default: function (obj, triggerType){
+    default: function (params, triggerType){
         //...
     },
-    book: function (obj, triggerType){
+    book: function (params, triggerType){
         //...
     }
 })
@@ -89,10 +89,10 @@ $.vpage.router({
 當網址的路由從沒有 hash 轉換到沒有 hash 的時候所觸發。
 ````javascript
 $.vpage.router({
-    noneHash: function (obj, triggerType){
+    noneHash: function (params, triggerType){
         //...
     }
-    '#user/:uid': function (obj, triggerType){
+    '#user/:uid': function (params, triggerType){
         //...
     }
 })
