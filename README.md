@@ -86,7 +86,7 @@ $.vpage.router({
 ````
 
 ### noneHash()
-當網址的路由從沒有 hash 轉換到沒有 hash 的時候所觸發。
+當網址的路由從』有 hash」 轉換到「沒有 hash」的時候所觸發。
 ````javascript
 $.vpage.router({
     noneHash: function (params, triggerType){
