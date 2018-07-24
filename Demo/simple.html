@@ -40,8 +40,8 @@
                 '#products/:type/:pid': function (obj){
                     console.log('(Hash) product', obj)
                 },
-                '#hello/world/:type/:id': function (obj){
-                    console.log(obj)
+                '#hello/world/:type/:id': function (obj, triggerType){
+                    console.log(obj, triggerType)
                 },
                 '#exhibition/:eid': function (obj){
                     console.log('(Hash) exhibition', obj)

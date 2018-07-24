@@ -11,7 +11,9 @@
 
         // 如果呼叫的模型名稱不存在
         if ($.vpage.storage.models[modelName] === undefined) return false;
-        
-        $.vpage.storage.models[modelName].call(this, params);
+
+        var triggerType = $.vpage.storage.triggerType;
+
+        $.vpage.storage.models[modelName].call(this, params, triggerType);
     }
 }(jQuery));

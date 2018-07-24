@@ -6,6 +6,9 @@
                 // 記錄所有模型方法，如同路由
                 models: {},
 
+                // 讀取的類型，判斷是頁面載入或是上下頁面切換 onLoad | onPop
+                triggerType: null, 
+
                 // 當前 history 新模型的名稱與觸發的所有參數
                 currentHistoryModelName: false, 
                 currentHistoryVpageParams: {},
@@ -62,8 +65,12 @@
             });
         }
 
-        this.loadHash = function (){
+        /**
+         * @param  {string} triggerType onLoad | onPop
+         */
+        this.loadHash = function (triggerType){
             var rBoxMatch;
+
             var hash = window.location.hash;
 
             // 如果沒有 Hash
@@ -90,12 +97,12 @@
                 return false;
             })
 
-            // console.log('hash is here')
 
             // 觸發並傳遞參數
             $.vpage.setStorage({
                 currentHashModelName: rBoxMatch.matchModelName,
-                currentHashVpageParams: rBoxMatch.matchParams
+                currentHashVpageParams: rBoxMatch.matchParams,
+                triggerType: triggerType
             })
 
         }
@@ -161,7 +168,7 @@
         }
 
         // 瀏覽器上、下頁切換
-        this.popstate = function() {
+        this.onPopState = function() {
             var _this = this;
             window.onpopstate = function() {
 
@@ -170,23 +177,28 @@
             }
         }
 
-        this.hashchange = function (){
+        // Hash 上、下頁切換
+        this.onHashChange = function (){
             window.onhashchange = function (){
+
+                console.log('onHashChange')
 
                 // 因為 modelName 如 'user/:uid' 在進行切換的時候並不會變動
                 // 所以要預先設設置一份偽 modelName 作為變動概念
                 $.vpage.setStorage({
                     currentHashModelName: '--autoSetForOnHashChange',
-                    currentHashVpageParams: {}
+                    currentHashVpageParams: {},
+                    triggerType: 'onPop'
                 })
 
-                $.vpage.helper.loadHash();
+                $.vpage.helper.loadHash('onPop');
 
                 // 代表上方沒有找到 HASH
                 if ($.vpage.storage.currentHashModelName === '--autoSetForOnHashChange'){
                     $.vpage.setStorage({
                         currentHashModelName: 'noneHash',
-                        currentHashVpageParams: {}
+                        currentHashVpageParams: {},
+                        triggerType: 'onPop'
                     })
                 }
             }

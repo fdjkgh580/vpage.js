@@ -23,11 +23,11 @@
         $.vpage.helper.loadHistoryFromQuery();
 
         // 當網址有 Hash 的時候進行比對與觸發
-        $.vpage.helper.loadHash();
+        $.vpage.helper.loadHash('onLoad');
         
-        $.vpage.helper.popstate();
+        $.vpage.helper.onPopState();
 
-        $.vpage.helper.hashchange();
+        $.vpage.helper.onHashChange();
 
     }
 }(jQuery));
