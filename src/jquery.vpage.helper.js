@@ -63,17 +63,17 @@
         }
 
         this.loadHash = function (){
+            var rBoxMatch;
             var hash = window.location.hash;
+
             // 如果沒有 Hash
             if (hash === "") return false;
 
-            // 忽略第 0 個的 # 並分解
-            var locationHashBox = hash.slice("1").split("/")
+            // 分解符號 /
+            var locationHashBox = hash.split("/")
 
             // 若有，把定義路由 hash 的形式找出來
             var definedBox = _getHashRouter();
-
-            var rBoxMatch;
             
             // 符合模型名稱的，拆解出每個字段
             $.each(definedBox, function (key, modelName){
@@ -102,22 +102,37 @@
 
         // 開始比對如 user/uid => user/123
         var _matchRouterHash = function (modelName, modelNameBox, locationHashBox){
-            // console.log(modelName, modelNameBox, locationHashBox)
+
+            // 放置匹配到的模型名稱
             var matchModelName = false;
+
+            // 放置匹配到給模型的參數
             var matchParams = {};
 
+            // EX.
+            // [#user, :uid]   <==> [#user, 123]
+            // [#products, content, :pid]   <==> [#products, content, 123]
             $.each(modelNameBox, function (key, seg){
-                // 絕對不是這個項目所以跳離
+            
+                // 如果是模型盒的第一個，且它的字段不等於網址 Hash 的第一個字段值，那麼後續也不必比對，因為絕對不是這個
                 if (key == 0 && seg != locationHashBox[key]) return false;
+                
+                // 模型名稱的字段與 hash 值對應到了，那代表有可能是這個路由，所以繼續比對下一個字段。如果對應不到，那有可能是參數。
                 if (seg == locationHashBox[key]) return true;
-                // console.log('index: '+key+'不同了')
-                // 這個 key 是如 :var 參數嗎
-                if (seg.indexOf(":") < 0) return false; // 代表也不是這個路由...
+            
+                // 這個字段是如 :var 參數嗎
+                if (seg.indexOf(":") < 0) return false; // 代表這個字段屬於路由，而不是參數。代表路由不符合。
+                
                 // 代表變數就是這個值，例如 id = 123
                 var paramName = seg.slice(1); // 去除 :
-                matchParams[paramName] = locationHashBox[key];
-                matchModelName = modelName;
 
+                // 設定模型名稱
+                if (matchModelName === false) matchModelName = modelName;
+
+                // 設定模型需要的參數
+                matchParams[paramName] = locationHashBox[key];
+
+                // 繼續下一個字段，比對參數下去
                 return true;
             })
 
@@ -130,13 +145,18 @@
 
         // 取得路由指定的 hash 項目
         var _getHashRouter = function (){
+
             var hashRouterBox = [];
+            
             $.each($.vpage.storage.models, function (modelName, fun){
-                // 找模組名稱如果出現 / 那代表就是
-                if (modelName.indexOf("/") < 0) return true;
+                
+                // 若模組名稱的第一個字不是 # 則繼續尋找
+                if (modelName.indexOf("#") < 0) return true; 
+
                 // 來到這裡的就是 hash 類型
                 hashRouterBox.push(modelName)
             })
+            
             return hashRouterBox;
         }
 

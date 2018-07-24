@@ -14,7 +14,7 @@
             $.vpage.router({
                 // ex. https://localhost
                 default: function (){
-                    console.log('default!!')
+                    // console.log('default!!')
                 },
                 // ex. https://localhost
                 noneHash: function (){
@@ -33,16 +33,20 @@
                     console.log("(History) E-mail: " + obj.email)
                 },
                 // https://......#user/123456
-                'user/:gogolo': function (obj){
+                '#user/:gogolo': function (obj){
                     console.log('(Hash) User', obj)
                 },
                 // https://......#user/123456
-                'products/:type/:pid': function (obj){
+                '#products/:type/:pid': function (obj){
                     console.log('(Hash) product', obj)
                 },
-                'exhibition/:eid': function (obj){
+                '#hello/world/:type/:id': function (obj){
+                    console.log(obj)
+                },
+                '#exhibition/:eid': function (obj){
                     console.log('(Hash) exhibition', obj)
                 }
+                
             })
 
 
