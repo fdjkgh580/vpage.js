@@ -12,39 +12,29 @@
         <script>
 
             $.vpage.router({
-                // ex. https://localhost
-                default: function (){
-                    // console.log('default!!')
+                default: function (obj, triggerType){
+                    console.log('default', obj, triggerType)
                 },
-                // ex. https://localhost
-                noneHash: function (){
-                    console.log('noneHash!!')
+                noneHash: function (obj, triggerType){
+                    console.log('noneHash', obj, triggerType)
                 },
-                // https://localhost?vpage=me
-                me: function (){
-                    console.log('me')
-                },
-                // https://localhost?vpage=book
-                book: function (obj){
-                    console.log("(History) Bid: " + obj.bid)
-                },
-                // https://localhost?vpage=contact
-                contact: function (obj){
-                    console.log("(History) E-mail: " + obj.email)
-                },
-                // https://......#user/123456
-                '#user/:gogolo': function (obj){
-                    console.log('(Hash) User', obj)
-                },
-                // https://......#user/123456
-                '#products/:type/:pid': function (obj){
-                    console.log('(Hash) product', obj)
-                },
-                '#hello/world/:type/:id': function (obj, triggerType){
+                me: function (obj, triggerType){
                     console.log(obj, triggerType)
                 },
-                '#exhibition/:eid': function (obj){
-                    console.log('(Hash) exhibition', obj)
+                book: function (obj, triggerType){
+                    console.log(obj, triggerType)
+                },
+                contact: function (obj, triggerType){
+                    console.log(obj, triggerType)
+                },
+                '#user/:gogolo': function (obj, triggerType){
+                    console.log(obj, triggerType)
+                },
+                '#product/detail/:type/:pid': function (obj, triggerType){
+                    console.log(obj, triggerType)
+                },
+                '#exhibition/:eid': function (obj, triggerType){
+                    console.log(obj, triggerType)
                 }
                 
             })
@@ -65,7 +55,7 @@
         <div>
             <a href="#user/123">#user/123</a>
             <a href="#user/456">#user/456</a>
-            <a href="#products/seafood/P007">#products/seafood/P007</a>
+            <a href="#product/detail/seafood/P007">#product/detail/seafood/P007</a>
         </div>
     </body>
 </html>

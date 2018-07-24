@@ -20,7 +20,7 @@
         $.vpage.listenStorage();
         
         // 當網址有 vpage 相關參數，則觸發模型
-        $.vpage.helper.loadHistoryFromQuery();
+        $.vpage.helper.loadHistoryFromQuery('onLoad');
 
         // 當網址有 Hash 的時候進行比對與觸發
         $.vpage.helper.loadHash('onLoad');

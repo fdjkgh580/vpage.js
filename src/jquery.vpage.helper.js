@@ -32,18 +32,21 @@
         /**
          * 從網址找到 vpage 所指定的模型名稱，使之觸發回呼。
          * 如果找不到，則預設
-         * 
+         * @param  {string} triggerType onLoad | onPop
          * @callback(allQueryObject)
          */
-        this.loadHistoryFromQuery = function() {
+        this.loadHistoryFromQuery = function(triggerType) {
+
             var allQueryObject = $.vpage.getUrlParams();
             var modelName = $.vpage.modelName(allQueryObject);
+            
             // console.log("--->", modelName, window.location.hash)
             if (modelName === null) {
 
                 $.vpage.setStorage({
                     currentHistoryModelName: 'default',
-                    currentHistoryVpageParams: {}
+                    currentHistoryVpageParams: {},
+                    triggerType: triggerType
                 })
 
                 return false;
@@ -60,7 +63,8 @@
                 // 變更當前的模型名稱
                 $.vpage.setStorage({
                     currentHistoryModelName: modelName,
-                    currentHistoryVpageParams: urlParams
+                    currentHistoryVpageParams: urlParams,
+                    triggerType: triggerType
                 })
             });
         }
@@ -172,7 +176,7 @@
             var _this = this;
             window.onpopstate = function() {
 
-                _this.loadHistoryFromQuery();
+                _this.loadHistoryFromQuery('onPop');
 
             }
         }
@@ -181,7 +185,7 @@
         this.onHashChange = function (){
             window.onhashchange = function (){
 
-                console.log('onHashChange')
+                // console.log('onHashChange')
 
                 // 因為 modelName 如 'user/:uid' 在進行切換的時候並不會變動
                 // 所以要預先設設置一份偽 modelName 作為變動概念
