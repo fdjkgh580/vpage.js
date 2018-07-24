@@ -1,5 +1,14 @@
 # vpage.js 2
-利用 jQuery 製作路由。有兩種方式可以觸發事件，一種是 History 另外一種是 Hash。
+利用 jQuery 製作路由或簡單的 SPA。有兩種方式可以觸發事件，一種是 History 另外一種是 Hash。
+
+# 安裝並載入
+````
+npm i vpage.js
+````
+````
+import 'vpage.js'
+````
+
 
 # 1. History 使用的方式
 網址參數(GET)的鍵出現了 vpage，例如 ?vpage=book 那麼將會啟用路由偵測。網址的任何 Query String 都會傳遞到路由模型。
