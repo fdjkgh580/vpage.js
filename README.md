@@ -1,5 +1,5 @@
 # vpage.js 2
-利用 jQuery 製作路由或簡單的 SPA。有兩種方式可以觸發事件，一種是 History 另外一種是 Hash。
+利用 jQuery 製作路由或簡單的 SPA。有兩種方式可以觸發事件，一種是 [History](https://github.com/fdjkgh580/vpage.js/blob/master/README.md#1-history-%E4%BD%BF%E7%94%A8%E7%9A%84%E6%96%B9%E5%BC%8F) 另外一種是 [Hash](https://github.com/fdjkgh580/vpage.js/blob/master/README.md#2-hash-%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F)。
 
 # 安裝並載入
 ````
