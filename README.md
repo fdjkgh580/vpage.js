@@ -14,6 +14,7 @@ $.vpage.router({
     }
 })
 ````
+[前往試試看](https://codepen.io/fdjkgh580/pen/WKjZez)
 ### 當使用 ````<button>```` 或其他元素
 
 ````html
@@ -26,6 +27,8 @@ $.vpage.router({
     }
 })
 ````
+[前往試試看](https://codepen.io/fdjkgh580/pen/NBjaaL)
+
 
 ## 2. Hash 的使用方式
 ````html
@@ -38,6 +41,7 @@ $.vpage.router({
     }
 })
 ````
+[前往試試看](https://codepen.io/fdjkgh580/pen/GBmMOO)
 
 ## API
 ### $.vpage.goto(modelName, params, {path})
@@ -47,11 +51,14 @@ $.vpage.goto("profile", {
     uid: 7899888015
 })
 ````
+[前往試試看](https://codepen.io/fdjkgh580/pen/QBvqxY)
+
 ### location
 要前往 hash 形式的路由，直接使用 location 即可
 ````javascript
 location.href = "#contact/fdjkgh580@gmail.com/0988888888"
 ````
+[前往試試看](https://codepen.io/fdjkgh580/pen/xJdXmR)
 
 ## 事件
 ### default()
