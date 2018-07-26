@@ -39,7 +39,7 @@
 
             var allQueryObject = $.vpage.getUrlParams();
             var modelName = $.vpage.modelName(allQueryObject);
-            
+
             // console.log("--->", modelName, window.location.hash)
             if (modelName === null) {
 
@@ -78,7 +78,16 @@
             var hash = window.location.hash;
 
             // 如果沒有 Hash
-            if (hash === "") return false;
+            if (hash === "") {
+                
+                $.vpage.setStorage({
+                    currentHashModelName: 'noneHash',
+                    currentHashVpageParams: {},
+                    triggerType: triggerType
+                })
+
+                return false;
+            }
 
             // 分解符號 /
             var locationHashBox = hash.split("/")
