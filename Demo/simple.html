@@ -27,15 +27,18 @@
                 contact: function (params, triggerType){
                     console.log(params, triggerType)
                 },
+                '#home': function (params, triggerType) {
+                    console.log('Find #home');
+                },
+                '#say/hello': function (params, triggerType) {
+                    console.log('Find #say/hello');
+                },
                 '#user/:uid': function (params, triggerType){
                     console.log(params, triggerType)
                 },
                 '#product/detail/:type/:pid': function (params, triggerType){
                     console.log(params, triggerType)
                 },
-                '#exhibition/:eid': function (params, triggerType){
-                    console.log(params, triggerType)
-                }
             })
 
 
@@ -52,8 +55,9 @@
 
         <!-- Hash -->
         <div>
+            <a href="#home">#home</a>
+            <a href="#say/hello">#say/hello</a>
             <a href="#user/123">#user/123</a>
-            <a href="#user/456">#user/456</a>
             <a href="#product/detail/seafood/P007">#product/detail/seafood/P007</a>
         </div>
     </body>

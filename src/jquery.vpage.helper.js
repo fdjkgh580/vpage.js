@@ -136,13 +136,17 @@
             
                 // 如果是模型盒的第一個，且它的字段不等於網址 Hash 的第一個字段值，那麼後續也不必比對，因為絕對不是這個
                 if (key == 0 && seg != locationHashBox[key]) return false;
-                
-                // 模型名稱的字段與 hash 值對應到了，那代表有可能是這個路由，所以繼續比對下一個字段。如果對應不到，那有可能是參數。
-                if (seg == locationHashBox[key]) return true;
-            
-                // 這個字段是如 :var 參數嗎
-                if (seg.indexOf(":") < 0) return false; // 代表這個字段屬於路由，而不是參數。代表路由不符合。
-                
+
+                // 若還有下一筆
+                if (key + 1 < modelNameBox.length) {
+
+                    // 模型名稱的字段與 hash 值對應到了，那代表有可能是這個路由，所以繼續比對下一個字段。如果對應不到，那有可能是參數。
+                    if (seg == locationHashBox[key]) return true;
+
+                    // 這個字段是如 :var 參數嗎
+                    if (seg.indexOf(":") < 0) return false; // 代表這個字段屬於路由，而不是參數。代表路由不符合。
+                }
+
                 // 代表變數就是這個值，例如 id = 123
                 var paramName = seg.slice(1); // 去除 :
 

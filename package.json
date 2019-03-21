@@ -1,13 +1,23 @@
 {
   "name": "vpage.js",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "利用 jQuery 製作路由或簡單的 SPA。有兩種方式可以觸發事件，一種是 History 另外一種是 Hash。",
   "main": "dist/jquery.vpage.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
-  "keywords": ["jquery", "plugin", "vpage", "router", "history", "hash", "onpopstate", "onhashchange", "SPA"],
+  "keywords": [
+    "jquery",
+    "plugin",
+    "vpage",
+    "router",
+    "history",
+    "hash",
+    "onpopstate",
+    "onhashchange",
+    "SPA"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {

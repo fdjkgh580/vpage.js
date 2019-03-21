@@ -2,7 +2,7 @@
 
     $.vpage = {
 
-        version: '2.0.0',
+        version: '2.3.0',
 
         // 只有為 true 的時候，才有辦法進行程序
         isInit: false,
