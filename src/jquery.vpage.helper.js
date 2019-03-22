@@ -90,38 +90,56 @@
             }
 
             // 分解符號 /
-            var locationHashBox = hash.split("/")
+            var locationHashBox = hash.split("/");
+
+            // 總共的數量
+            var totalHashSeg = locationHashBox.length;
 
             // 若有，把定義路由 hash 的形式找出來
             var definedBox = _getHashRouter();
-            
-            // 符合模型名稱的，拆解出每個字段
-            $.each(definedBox, function (key, modelName){
-
-                // 將定義的路由分解
-                var splitBox = modelName.split("/");
-
-                rBoxMatch = _matchRouterHash(modelName, splitBox, locationHashBox)
-
-                // 如果不是匹配的模型名稱，繼續下一個
-                if (rBoxMatch.matchModelName === false) return true;
-
-                // 找到了
-                return false;
-            })
+            // console.log($.inArray(hash, definedBox), hash, definedBox);
 
 
-            // 觸發並傳遞參數
-            $.vpage.setStorage({
-                currentHashModelName: rBoxMatch.matchModelName,
-                currentHashVpageParams: rBoxMatch.matchParams,
-                triggerType: triggerType
-            })
+            // 先比對是否有完全相符合，代表不使用參數，例如 url: #home, router 指定 #home
+            if ($.inArray(hash, definedBox) > -1) {
+                var matchModelName = hash;
 
+                // // 觸發並傳遞參數
+                $.vpage.setStorage({
+                    currentHashModelName: matchModelName,
+                    currentHashVpageParams: {},
+                    triggerType: triggerType
+                })
+            }
+            // 不代參數的網址語路由，若沒有完全匹配的再逐一判斷
+            else {
+
+                // 符合模型名稱的，拆解出每個字段
+                $.each(definedBox, function (key, modelName){
+
+                    // 將定義的路由分解
+                    var splitBox = modelName.split("/");
+
+                    rBoxMatch = _matchRouterHash(modelName, splitBox, locationHashBox, totalHashSeg);
+
+                    // 如果不是匹配的模型名稱，繼續下一個
+                    if (rBoxMatch.matchModelName === false) return true;
+
+                    // 找到了
+                    return false;
+                })
+
+                // 觸發並傳遞參數
+                $.vpage.setStorage({
+                    currentHashModelName: rBoxMatch.matchModelName,
+                    currentHashVpageParams: rBoxMatch.matchParams,
+                    triggerType: triggerType
+                })
+            }
         }
 
         // 開始比對如 user/uid => user/123
-        var _matchRouterHash = function (modelName, modelNameBox, locationHashBox){
+        var _matchRouterHash = function (modelName, modelNameBox, locationHashBox, totalHashSeg){
 
             // 放置匹配到的模型名稱
             var matchModelName = false;
@@ -129,23 +147,52 @@
             // 放置匹配到給模型的參數
             var matchParams = {};
 
+            // 網址的 hash 總字段數量不等於該次模型的字段落數量，那就離開
+            if (modelNameBox.length !== totalHashSeg) {
+                return {
+                    matchModelName: matchModelName,
+                    matchParams: matchParams
+                }
+            }
+
             // EX.
             // [#user, :uid]   <==> [#user, 123]
             // [#products, content, :pid]   <==> [#products, content, 123]
             $.each(modelNameBox, function (key, seg){
-            
+
+
                 // 如果是模型盒的第一個，且它的字段不等於網址 Hash 的第一個字段值，那麼後續也不必比對，因為絕對不是這個
-                if (key == 0 && seg != locationHashBox[key]) return false;
+                if (key == 0 && seg != locationHashBox[key]) {
+                    return false;
+                }
+
 
                 // 若還有下一筆
-                if (key + 1 < modelNameBox.length) {
+                if (key + 1 <= modelNameBox.length) {
 
-                    // 模型名稱的字段與 hash 值對應到了，那代表有可能是這個路由，所以繼續比對下一個字段。如果對應不到，那有可能是參數。
-                    if (seg == locationHashBox[key]) return true;
+                    // 模型名稱的字段與 hash 值對應到了，那代表有可能是這個路由，所以繼續比對下一個字段。
+                    if (seg == locationHashBox[key]) {
+                        return true;
+                    }
+                    else {
+                        // 如果對應不到，那有可能是參數。
+                    }
 
                     // 這個字段是如 :var 參數嗎
-                    if (seg.indexOf(":") < 0) return false; // 代表這個字段屬於路由，而不是參數。代表路由不符合。
+                    if (seg.indexOf(":") < 0) {
+                        // 代表這個字段屬於路由，而不是參數。代表路由不符合。
+                        return false;
+                    }
+                    else {
+                    }
                 }
+                // 若沒有下一筆
+                else {
+                }
+
+                // console.log(key, modelNameBox.length);
+                // if (locationHashBox[key])
+
 
                 // 代表變數就是這個值，例如 id = 123
                 var paramName = seg.slice(1); // 去除 :

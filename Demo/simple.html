@@ -13,10 +13,10 @@
 
             $.vpage.router({
                 default: function (params, triggerType){
-                    console.log('default', params, triggerType)
+                    // console.log('default', params, triggerType)
                 },
                 noneHash: function (params, triggerType){
-                    console.log('noneHash', params, triggerType)
+                    // console.log('noneHash', params, triggerType)
                 },
                 me: function (params, triggerType){
                     console.log(params, triggerType)
@@ -28,16 +28,22 @@
                     console.log(params, triggerType)
                 },
                 '#home': function (params, triggerType) {
-                    console.log('Find #home');
+                    console.log("#home", params, triggerType)
+                },
+                '#home/:id': function (params, triggerType) {
+                    console.log("#home/:id", params, triggerType)
                 },
                 '#say/hello': function (params, triggerType) {
-                    console.log('Find #say/hello');
+                    console.log("#say/hello", params, triggerType)
                 },
                 '#user/:uid': function (params, triggerType){
-                    console.log(params, triggerType)
+                    console.log("#user/:uid", params, triggerType)
+                },
+                '#user/:groupId/:id': function (params, triggerType){
+                    console.log("#user/:groupId/:id", params, triggerType)
                 },
                 '#product/detail/:type/:pid': function (params, triggerType){
-                    console.log(params, triggerType)
+                    console.log("#product/detail/:type/:pid", params, triggerType)
                 },
             })
 
@@ -54,11 +60,13 @@
         </div>
 
         <!-- Hash -->
-        <div>
-            <a href="#home">#home</a>
-            <a href="#say/hello">#say/hello</a>
-            <a href="#user/123">#user/123</a>
-            <a href="#product/detail/seafood/P007">#product/detail/seafood/P007</a>
-        </div>
+        <ul>
+            <li><a href="#home">#home</a></li>
+            <li><a href="#home/123">#home/123</a></li>
+            <li><a href="#say/hello">#say/hello</a></li>
+            <li><a href="#user/123">#user/123</a></li>
+            <li><a href="#user/123/456">#user/123/456</a></li>
+            <li><a href="#product/detail/seafood/P007">#product/detail/seafood/P007</a></li>
+        </ul>
     </body>
 </html>
