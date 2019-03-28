@@ -13,10 +13,10 @@
 
             $.vpage.router({
                 default: function (params, triggerType){
-                    // console.log('default', params, triggerType)
+                    console.log('default', params, triggerType)
                 },
                 noneHash: function (params, triggerType){
-                    // console.log('noneHash', params, triggerType)
+                    console.log('noneHash', params, triggerType)
                 },
                 me: function (params, triggerType){
                     console.log(params, triggerType)
@@ -61,6 +61,7 @@
 
         <!-- Hash -->
         <ul>
+            <li><a href="#noneMatch">#noneMatch</a></li>
             <li><a href="#home">#home</a></li>
             <li><a href="#home/123">#home/123</a></li>
             <li><a href="#say/hello">#say/hello</a></li>

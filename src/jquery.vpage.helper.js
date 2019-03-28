@@ -111,11 +111,11 @@
                     triggerType: triggerType
                 })
             }
-            // 不代參數的網址語路由，若沒有完全匹配的再逐一判斷
+            // 不代參數的網址與路由，若沒有完全匹配的再逐一判斷
             else {
 
                 // 符合模型名稱的，拆解出每個字段
-                $.each(definedBox, function (key, modelName){
+                var eachval = $.each(definedBox, function (key, modelName){
 
                     // 將定義的路由分解
                     var splitBox = modelName.split("/");
@@ -128,6 +128,16 @@
                     // 找到了
                     return false;
                 })
+
+                // 如果全部比對都沒有
+                if (rBoxMatch.matchModelName === false) {
+                    $.vpage.setStorage({
+                        currentHashModelName: 'noneHash',
+                        currentHashVpageParams: rBoxMatch.matchParams,
+                        triggerType: triggerType
+                    })
+                    return false;
+                }
 
                 // 觸發並傳遞參數
                 $.vpage.setStorage({
