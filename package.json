@@ -1,6 +1,6 @@
 {
   "name": "vpage.js",
-  "version": "2.3.2",
+  "version": "2.4.0",
   "description": "利用 jQuery 製作路由或簡單的 SPA。有兩種方式可以觸發事件，一種是 History 另外一種是 Hash。",
   "main": "dist/jquery.vpage.min.js",
   "scripts": {

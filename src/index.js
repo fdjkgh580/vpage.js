@@ -14,6 +14,7 @@ import './jquery.vpage.setStorage.js';
 import './jquery.vpage.initModels.js';
 import './jquery.vpage.listenStorage.js';
 import './jquery.vpage.modelName.js';
+import './jquery.vpage.always.js';
 
 $(function (){
     $.vpage.init();

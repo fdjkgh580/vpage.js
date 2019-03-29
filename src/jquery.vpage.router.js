@@ -29,5 +29,6 @@
 
         $.vpage.helper.onHashChange();
 
+        return this;
     }
 }(jQuery));

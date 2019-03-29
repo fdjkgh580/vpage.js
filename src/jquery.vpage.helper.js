@@ -15,7 +15,10 @@
 
                 // 當前 hash 新模型的名稱與觸發的所有參數
                 currentHashModelName: false,
-                currentHashVpageParams: {}
+                currentHashVpageParams: {},
+
+                // 每次變動 router 都會觸發的方法
+                alwaysCallback: function () {},
             }
         }
 
@@ -36,7 +39,7 @@
          * @callback(allQueryObject)
          */
         this.loadHistoryFromQuery = function(triggerType) {
-
+            var _this = this;
             var allQueryObject = $.vpage.getUrlParams();
             var modelName = $.vpage.modelName(allQueryObject);
 
@@ -49,6 +52,14 @@
                     triggerType: triggerType
                 })
 
+                // 因為一開始就載入，若外部指定 always() 我們必須設定延遲觸發
+                if ($.vpage.isDelayTriggerAlways === false) {
+                    $.vpage.isDelayTriggerAlways = true;
+                }
+                else {
+                    // console.log('@@@');
+                    // $.vpage.storage.alwaysCallback.call(_this, $.vpage.storage);
+                }
                 return false;
             }
 
@@ -66,6 +77,8 @@
                     currentHistoryVpageParams: urlParams,
                     triggerType: triggerType
                 })
+
+                $.vpage.storage.alwaysCallback.call(_this, $.vpage.storage);
             });
         }
 
@@ -245,19 +258,18 @@
         this.onPopState = function() {
             var _this = this;
             window.onpopstate = function() {
-
                 _this.loadHistoryFromQuery('onPop');
-
             }
         }
 
-        // Hash 上、下頁切換
+
+
+        // Hash 發生變動
         this.onHashChange = function (){
+            var _this = this;
             window.onhashchange = function (){
 
-                // console.log('onHashChange')
-
-                // 因為 modelName 如 'user/:uid' 在進行切換的時候並不會變動
+                // 因為 modelName 在 history 如 'user/:uid' 下進行切換的時候並不會變動
                 // 所以要預先設設置一份偽 modelName 作為變動概念
                 $.vpage.setStorage({
                     currentHashModelName: '--autoSetForOnHashChange',
@@ -267,6 +279,7 @@
 
                 $.vpage.helper.loadHash('onPop');
 
+
                 // 代表上方沒有找到 HASH
                 if ($.vpage.storage.currentHashModelName === '--autoSetForOnHashChange'){
                     $.vpage.setStorage({
@@ -275,6 +288,8 @@
                         triggerType: 'onPop'
                     })
                 }
+
+                $.vpage.storage.alwaysCallback.call(_this, $.vpage.storage);
             }
         }
 

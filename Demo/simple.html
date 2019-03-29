@@ -45,9 +45,13 @@
                 '#product/detail/:type/:pid': function (params, triggerType){
                     console.log("#product/detail/:type/:pid", params, triggerType)
                 },
+            }).always(function (storage){
+                console.log("always!",
+                    storage.currentHashModelName,
+                    storage.currentHashVpageParams,
+                    storage.triggerType
+                );
             })
-
-
 
         </script>
     </head>
@@ -61,7 +65,7 @@
 
         <!-- Hash -->
         <ul>
-            <li><a href="#noneMatch">#noneMatch</a></li>
+            <li><a href="#"># (noneMatch)</a></li>
             <li><a href="#home">#home</a></li>
             <li><a href="#home/123">#home/123</a></li>
             <li><a href="#say/hello">#say/hello</a></li>
